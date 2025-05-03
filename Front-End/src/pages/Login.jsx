@@ -5,7 +5,7 @@ export default function Login() {
     // TODO: implement login functionality
     return (
         <main className='bg-base-100 grid h-screen w-screen place-items-center'>
-            <section className='bg-base-200 flex items-center gap-8 rounded-lg p-8 shadow'>
+            <section className='bg-base-200 shadow-base-300 flex items-center gap-8 rounded-lg p-8 shadow'>
                 <div className='hidden lg:block'>
                     <img src='login.png' alt='login' />
                 </div>
