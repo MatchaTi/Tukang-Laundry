@@ -3,6 +3,41 @@ POST http://localhost:8080/api/v1/auth/login
 Content-Type: application/json
 
 {
-    "email": "admin@admin.com",
-    "password": "admin123"
+    "email": "Awewe@gmail.com",
+    "password": "kasir123"
 }
+
+### POST new kasir
+POST http://localhost:8080/api/v1/kasir
+Content-Type: application/json
+
+{
+    "name": "Ucup Bin Calucup",
+    "email": "Awewe@gmail.com",
+    "password": "kasir123"
+}
+
+### GET all kasir
+
+GET http://localhost:8080/api/v1/kasir
+
+
+### GET kasir by id
+
+GET http://localhost:8080/api/v1/kasir/7
+
+
+### Put kasir by id
+
+PUT http://localhost:8080/api/v1/kasir/7
+Content-Type: application/json
+
+{
+    "name": "Kasir 2",
+    "email": "kasir1_updated@admin.com",
+    "password": "kasir123_updated"
+}
+
+### DELETE kasir by id
+
+DELETE http://localhost:8080/api/v1/kasir/7

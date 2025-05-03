@@ -1,0 +1,77 @@
+package TukangLaundry.restful.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import TukangLaundry.restful.dto.kasir.CreateKasirResponse;
+import TukangLaundry.restful.dto.kasir.KasirResponseAll;
+import TukangLaundry.restful.dto.kasir.KasirResponseSingle;
+import TukangLaundry.restful.dto.kasir.UpdateKasirRequest;
+import TukangLaundry.restful.model.Kasir;
+import TukangLaundry.restful.repository.KasirRepository;
+
+@Service
+public class KasirService {
+
+    @Autowired
+    private KasirRepository kasirRepo;
+
+    public Kasir addKasir(Kasir kasir) {
+        return kasirRepo.save(kasir);
+    }
+
+    public List<KasirResponseAll> getAllKasir() {
+        List<Kasir> kasirList = kasirRepo.findAll();
+        return kasirList.stream().map(kasir -> {
+            KasirResponseAll response = new KasirResponseAll();
+            response.setId(kasir.getId());
+            response.setName(kasir.getName());
+            response.setEmail(kasir.getEmail());
+            response.setRole("Kasir");
+            return response;
+        }).toList();
+    }
+
+    public KasirResponseSingle getKasirById(Integer id) {
+        Optional<Kasir> kasirOpt = kasirRepo.findById(id);
+        if (kasirOpt.isPresent()) {
+            Kasir kasir = kasirOpt.get();
+            KasirResponseSingle response = new KasirResponseSingle();
+            response.setId(kasir.getId());
+            response.setName(kasir.getName());
+            response.setEmail(kasir.getEmail());
+            response.setRole("Kasir");
+            response.setPassword(kasir.getPassword());
+            return response;
+        } else {
+            throw new RuntimeException("Kasir tidak ditemukan dengan ID: " + id);
+        }
+    }
+
+    public CreateKasirResponse updateKasirById(UpdateKasirRequest request) {
+        Optional<Kasir> kasirOpt = kasirRepo.findById(request.getId());
+        if (kasirOpt.isPresent()) {
+            Kasir kasir = kasirOpt.get();
+            kasir.setName(request.getName());
+            kasir.setEmail(request.getEmail());
+            kasir.setPassword(request.getPassword());
+            kasirRepo.save(kasir);
+            return new CreateKasirResponse(true, "Kasir berhasil diperbarui");
+        } else {
+            return new CreateKasirResponse(false, "Kasir tidak ditemukan dengan ID: " + request.getId());
+        }
+    }
+
+    public CreateKasirResponse deleteKasirById(Integer id) {
+        Optional<Kasir> kasirOpt = kasirRepo.findById(id);
+        if (kasirOpt.isPresent()) {
+            kasirRepo.delete(kasirOpt.get());
+            return new CreateKasirResponse(true, "Kasir berhasil dihapus");
+        } else {
+            return new CreateKasirResponse(false, "Kasir tidak ditemukan dengan ID: " + id);
+        }
+    }
+}

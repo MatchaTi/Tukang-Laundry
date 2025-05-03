@@ -22,8 +22,8 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
-    @PostMapping("/login")
-    public ResponseEntity<Map<String, Object>> login(@RequestBody LoginRequest request) {
+    @PostMapping("/login") // menerapkan keyword final
+    public final ResponseEntity<Map<String, Object>> login(@RequestBody LoginRequest request) {
         LoginResponse loginResult = authService.login(request);
 
         Map<String, Object> response = new HashMap<>();

@@ -5,7 +5,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "admin")
-public class Admin extends User {
+public class Admin extends User { // Menerapkan abstract class dan inheritance
 
     public Admin() {
         this.role = Role.ADMIN;

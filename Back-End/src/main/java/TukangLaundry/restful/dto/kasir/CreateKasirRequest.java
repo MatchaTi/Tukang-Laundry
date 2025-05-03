@@ -1,6 +1,6 @@
 package TukangLaundry.restful.dto.kasir;
 
-public class KasirRequest {
+public class CreateKasirRequest {
     private String name;
     private String email;
     private String password;
