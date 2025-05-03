@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+@plugin "daisyui";
+
+@plugin "daisyui/theme" {
+  name: "laundry";
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
+
+  --color-base-100: #f7feff;
+  --color-base-200: #ffffff;
+  --color-base-300: #f1f5f9;
+  --color-base-content: #263238;
+  --color-primary: #21b7e2;
+  --color-primary-content: #ffffff;
+  --color-secondary: #f1f5f9;
+  --color-secondary-content: #263238;
+  --color-accent: #3b82f6;
+  --color-accent-content: #ffffff;
+  --color-neutral: #374151;
+  --color-neutral-content: #ffffff;
+  --color-info: #96cdfb;
+  --color-info-content: #187aba;
+  --color-success: #abe9b3;
+  --color-success-content: #128035;
+  --color-warning: #fae3b0;
+  --color-warning-content: #967522;
+  --color-error: #e67e80;
+  --color-error-content: #c53d40;
+}
