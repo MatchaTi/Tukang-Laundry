@@ -1,10 +1,10 @@
 import { Icon } from '@iconify/react/dist/iconify.js';
 import React from 'react';
+import Fieldset from '../components/Fieldset';
 import Header from '../components/Header';
 import Input from '../components/Input';
 import MainLayout from '../components/MainLayout';
 import { getCookie } from '../utils/cookie';
-import Fieldset from './Fieldset';
 
 export default function TambahPesanan() {
     const userCookie = getCookie();
@@ -15,8 +15,8 @@ export default function TambahPesanan() {
             <Header />
             <section className='bg-base-200 shadow-base-300 mt-10 space-y-6 rounded-lg p-6 shadow'>
                 <div className='space-y-3'>
-                    <h1 className='text-lg font-semibold'>Detail Pesanan</h1>
-                    <p>Melihat detail pesanan pada sistem TukangLaundry</p>
+                    <h1 className='text-lg font-semibold'>Tambah Pesanan</h1>
+                    <p>Tambah pesanan pada sistem Tukang Laundry</p>
                 </div>
 
                 <form className='grid grid-cols-2 gap-6'>

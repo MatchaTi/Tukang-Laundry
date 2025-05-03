@@ -17,7 +17,7 @@ export default function DetailPesanan() {
                 <div className='flex items-center justify-between'>
                     <div className='space-y-3'>
                         <h1 className='text-lg font-semibold'>Detail Pesanan</h1>
-                        <p>Melihat detail pesanan pada sistem TukangLaundry</p>
+                        <p>Melihat detail pesanan pada sistem Tukang Laundry</p>
                     </div>
                     <div className='flex min-w-fit items-center gap-3'>
                         <div className='min-w-fit'>Status Pesanan: </div>

@@ -19,8 +19,8 @@ export default function UbahPesanan() {
             <section className='bg-base-200 shadow-base-300 mt-10 space-y-6 rounded-lg p-6 shadow'>
                 <div className='flex items-center justify-between'>
                     <div className='space-y-3'>
-                        <h1 className='text-lg font-semibold'>Detail Pesanan</h1>
-                        <p>Melihat detail pesanan pada sistem TukangLaundry</p>
+                        <h1 className='text-lg font-semibold'>Ubah Pesanan</h1>
+                        <p>Mengubah pesanan pada sistem Tukang Laundry</p>
                     </div>
                     <div className='flex min-w-fit items-center gap-3'>
                         <div className='min-w-fit'>Status Pesanan: </div>
