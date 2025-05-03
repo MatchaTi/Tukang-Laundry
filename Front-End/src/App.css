@@ -29,7 +29,3 @@
     --color-error: #e67e80;
     --color-error-content: #c53d40;
 }
-
-* {
-    @apply text-sm;
-}
