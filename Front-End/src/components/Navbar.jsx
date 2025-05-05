@@ -10,8 +10,8 @@ export default function Navbar() {
     let navItems;
 
     const userCookie = getCookie();
-    if (userCookie.role === 'admin') navItems = adminItems;
-    else if (userCookie.role === 'kasir') navItems = kasirItems;
+    if (userCookie.role === 'Admin') navItems = adminItems;
+    else if (userCookie.role === 'Kasir') navItems = kasirItems;
 
     return (
         <nav className='bg-base-200 sticky top-0 h-screen min-w-fit space-y-10 p-6 text-sm'>
