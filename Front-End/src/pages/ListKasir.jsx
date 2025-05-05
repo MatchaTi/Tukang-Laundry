@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react/dist/iconify.js';
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router';
 import Badge from '../components/Badge';
@@ -9,6 +10,35 @@ import Modal from '../components/Modal';
 
 export default function ListKasir() {
     // TODO: implement search functionality
+    const [data, setdata] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('http://localhost:8080/api/v1/kasir');
+                setdata(response.data);
+                console.log(response.data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+        fetchData();
+    }, []);
+
+    const deleteCashier = async (id) => {
+        try {
+            const response = await axios.delete(`http://localhost:8080/api/v1/kasir/${id}`);
+            if (!response.data.status) {
+                toast.error(response.data.pesan);
+                return;
+            }
+            toast.success(response.data.pesan);
+            window.location.reload();
+        } catch (error) {
+            toast.error('Gagal menghapus kasir', error);
+        }
+    };
+
     return (
         <MainLayout>
             <Header />
@@ -40,39 +70,41 @@ export default function ListKasir() {
                             </tr>
                         </thead>
                         <tbody>
-                            {Array.from({ length: 10 }, (_, i) => (
+                            {data.map((item, i) => (
                                 <tr key={i}>
                                     <th>{i + 1}</th>
-                                    <td>Raana</td>
-                                    <td>raana@gmail.com</td>
+                                    <td>{item.name}</td>
+                                    <td>{item.email}</td>
                                     <td>
-                                        <Badge state='badge-success'>Kasir</Badge>
+                                        <Badge state='badge-success'>{item.role}</Badge>
                                     </td>
                                     <td className='flex items-center justify-end gap-3'>
-                                        <Link to={`/list-kasir/ubah-kasir/${i}`} className='btn btn-info btn-sm'>
+                                        <Link to={`/list-kasir/ubah-kasir/${item.id}`} className='btn btn-info btn-sm'>
                                             <Icon icon='tabler:edit' />
                                         </Link>
 
                                         <Modal.Trigger
-                                            htmlFor={`my_modal_${i}`}
+                                            htmlFor={`my_modal_${item.id}`}
                                             btnState='btn-error'
                                             className='btn-sm'
                                         >
                                             <Icon icon='tabler:trash' />
                                         </Modal.Trigger>
-                                        <Modal modalId={`my_modal_${i}`}>
+                                        <Modal modalId={`my_modal_${item.id}`}>
                                             <Modal.Header>Hapus Kasir</Modal.Header>
                                             <Modal.Body>
-                                                <p className='text-sm'>Apakah anda yakin ingin menghapus kasir {i}?</p>
+                                                <p className='text-sm'>
+                                                    Apakah anda yakin ingin menghapus kasir {item.name}?
+                                                </p>
                                                 <div className='modal-action flex items-center gap-3'>
-                                                    <label htmlFor={`my_modal_${i}`} className='cursor-pointer'>
+                                                    <label htmlFor={`my_modal_${item.id}`} className='cursor-pointer'>
                                                         Tutup
                                                     </label>
                                                     <label
                                                         role='button'
-                                                        onClick={() => toast.success('Kasir berhasil dihapus!')}
+                                                        onClick={() => deleteCashier(item.id)}
                                                         className='btn btn-error text-white'
-                                                        htmlFor={`my_modal_${i}`}
+                                                        htmlFor={`my_modal_${item.id}`}
                                                     >
                                                         Hapus
                                                     </label>
