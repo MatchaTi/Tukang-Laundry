@@ -1,5 +1,7 @@
 import { Icon } from '@iconify/react/dist/iconify.js';
-import React from 'react';
+import axios from 'axios';
+import clsx from 'clsx';
+import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router';
 import Badge from '../components/Badge';
@@ -9,6 +11,35 @@ import Modal from '../components/Modal';
 
 export default function ListPaket() {
     // TODO: implement search functionality
+    const [data, setdata] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('http://localhost:8080/api/v1/paket');
+                setdata(response.data);
+                console.log(response.data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+        fetchData();
+    }, []);
+
+    const deletePacket = async (id) => {
+        try {
+            const response = await axios.delete(`http://localhost:8080/api/v1/paket/${id}`);
+            if (!response.data.status) {
+                toast.error(response.data.pesan);
+                return;
+            }
+            toast.success(response.data.pesan);
+            window.location.reload();
+        } catch (error) {
+            toast.error('Gagal menghapus paket', error);
+        }
+    };
+
     return (
         <MainLayout>
             <Header />
@@ -40,45 +71,54 @@ export default function ListPaket() {
                             </tr>
                         </thead>
                         <tbody>
-                            {Array.from({ length: 10 }, (_, i) => (
+                            {data.map((item, i) => (
                                 <tr key={i}>
                                     <th>{i + 1}</th>
-                                    <td>Express</td>
-                                    <td>12.000</td>
+                                    <td>{item.nama}</td>
+                                    <td>{item.harga_per_kg}</td>
                                     <td>
-                                        <Badge state='badge-success'>Aktif</Badge>
+                                        <Badge
+                                            state={clsx(item.status === 'AKTIF' ? 'badge-success' : 'badge-warning')}
+                                        >
+                                            {item.status}
+                                        </Badge>
                                     </td>
                                     <td className='flex items-center justify-end gap-3'>
                                         <Link
-                                            to={`/paket-layanan/detail-paket/${i}`}
+                                            to={`/paket-layanan/detail-paket/${item.id}`}
                                             className='btn btn-primary btn-sm'
                                         >
                                             <Icon icon='iconoir:eye' />
                                         </Link>
-                                        <Link to={`/paket-layanan/ubah-paket/${i}`} className='btn btn-info btn-sm'>
+                                        <Link
+                                            to={`/paket-layanan/ubah-paket/${item.id}`}
+                                            className='btn btn-info btn-sm'
+                                        >
                                             <Icon icon='tabler:edit' />
                                         </Link>
 
                                         <Modal.Trigger
-                                            htmlFor={`my_modal_${i}`}
+                                            htmlFor={`my_modal_${item.id}`}
                                             btnState='btn-error'
                                             className='btn-sm'
                                         >
                                             <Icon icon='tabler:trash' />
                                         </Modal.Trigger>
-                                        <Modal modalId={`my_modal_${i}`}>
+                                        <Modal modalId={`my_modal_${item.id}`}>
                                             <Modal.Header>Hapus Paket Layanan</Modal.Header>
                                             <Modal.Body>
-                                                <p className='text-sm'>Apakah anda yakin ingin menghapus paket {i}?</p>
+                                                <p className='text-sm'>
+                                                    Apakah anda yakin ingin menghapus paket {item.nama}?
+                                                </p>
                                                 <div className='modal-action flex items-center gap-3'>
-                                                    <label htmlFor={`my_modal_${i}`} className='cursor-pointer'>
+                                                    <label htmlFor={`my_modal_${item.id}`} className='cursor-pointer'>
                                                         Tutup
                                                     </label>
                                                     <label
                                                         role='button'
-                                                        onClick={() => toast.success('Paket berhasil dihapus!')}
+                                                        onClick={() => deletePacket(item.id)}
                                                         className='btn btn-error text-white'
-                                                        htmlFor={`my_modal_${i}`}
+                                                        htmlFor={`my_modal_${item.id}`}
                                                     >
                                                         Hapus
                                                     </label>
