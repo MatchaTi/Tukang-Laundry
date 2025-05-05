@@ -1,15 +1,16 @@
 package TukangLaundry.restful.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import TukangLaundry.restful.model.Kasir;
-import TukangLaundry.restful.repository.AdminRepository;
-import TukangLaundry.restful.repository.KasirRepository;
 import TukangLaundry.restful.dto.auth.LoginRequest;
 import TukangLaundry.restful.dto.auth.LoginResponse;
 import TukangLaundry.restful.model.Admin;
-import java.util.Optional;
+import TukangLaundry.restful.model.Kasir;
+import TukangLaundry.restful.repository.AdminRepository;
+import TukangLaundry.restful.repository.KasirRepository;
 
 @Service
 public class AuthService {
