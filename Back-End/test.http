@@ -14,7 +14,7 @@ Content-Type: application/json
 
 {
     "name": "Ucup Bin Calucup",
-    "email": "Walawew@gmail.com",
+    "email": "waw2@gmail.com",
     "password": "kasir123"
 }
 
@@ -25,12 +25,12 @@ GET http://localhost:8080/api/v1/kasir
 
 ### GET kasir by id
 
-GET http://localhost:8080/api/v1/kasir/9
+GET http://localhost:8080/api/v1/kasir/6
 
 
 ### Put kasir by id
 
-PUT http://localhost:8080/api/v1/kasir/1
+PUT http://localhost:8080/api/v1/kasir/6
 Content-Type: application/json
 
 {
@@ -52,16 +52,16 @@ POST http://localhost:8080/api/v1/paket
 Content-Type: application/json
 
 {
-    "nama": "Kecepatan",
+    "nama": "Kecepatan7",
     "harga_per_kg": 30000,
-    "catatan": "1 Jam"
+    "catatan": null
 }
 
 ### GET all paket
 GET http://localhost:8080/api/v1/paket
 
 ### GET paket by id
-GET http://localhost:8080/api/v1/paket/3
+GET http://localhost:8080/api/v1/paket/11
 
 ### PUT paket by id
 PUT http://localhost:8080/api/v1/paket/3
@@ -75,4 +75,24 @@ Content-Type: application/json
 }
 
 ### DELETE paket by id
-DELETE http://localhost:8080/api/v1/paket/2
+DELETE http://localhost:8080/api/v1/paket/6
+
+
+
+### PESANAN
+
+### POST new pesanan
+POST http://localhost:8080/api/v1/pesanan
+Content-Type: application/json
+
+{
+    "kasirId": 6,
+    "paketId": 5,
+    "beratKg": 2,
+    "namaPelanggan": "Injil",
+    "String": "Customer VIP"
+
+}
+
+### GET all pesanan
+GET http://localhost:8080/api/v1/pesanan

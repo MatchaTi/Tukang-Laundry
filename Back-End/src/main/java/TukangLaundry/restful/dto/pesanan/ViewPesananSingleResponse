@@ -1,0 +1,7 @@
+package TukangLaundry.restful.dto.paket;
+
+public class ViewPesananResponseSingle{
+    private Integer id;
+    private String nama_kasir;
+    private String nama_paket;
+}
