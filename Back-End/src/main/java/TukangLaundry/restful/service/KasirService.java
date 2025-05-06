@@ -20,6 +20,15 @@ public class KasirService {
     private KasirRepository kasirRepo;
 
     public Kasir addKasir(Kasir kasir) {
+        // Cek data tidak kosong
+        if (kasir.getName() == null || kasir.getEmail() == null || kasir.getPassword() == null) {
+            throw new RuntimeException("Data tidak boleh kosong");
+        }
+        // Cek apakah email sudah ada di database
+        Optional<Kasir> existingKasir = kasirRepo.findByEmail(kasir.getEmail());
+        if (existingKasir.isPresent()) {
+            throw new RuntimeException("Email sudah terdaftar");
+        }
         return kasirRepo.save(kasir);
     }
 
