@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react/dist/iconify.js';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Fieldset from '../components/Fieldset';
 import Header from '../components/Header';
 import Input from '../components/Input';
@@ -8,6 +8,20 @@ import { getCookie } from '../utils/cookie';
 
 export default function TambahPesanan() {
     const userCookie = getCookie();
+    const [paket, setPaket] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch('http://localhost:8080/api/v1/paket');
+                const data = await response.json();
+                setPaket(data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+        fetchData();
+    }, []);
     // TODO: fetch paket layanan
     // TODO: send data to API
     return (
@@ -36,8 +50,11 @@ export default function TambahPesanan() {
                                 <option value='express' disabled>
                                     -- Pilih Paket --
                                 </option>
-                                <option value='express'>Express</option>
-                                <option value='reguler'>Reguler</option>
+                                {paket.map((item, i) => (
+                                    <option key={i} value={item.id}>
+                                        {item.nama}
+                                    </option>
+                                ))}
                             </select>
                         </Fieldset.Body>
                     </Fieldset>
