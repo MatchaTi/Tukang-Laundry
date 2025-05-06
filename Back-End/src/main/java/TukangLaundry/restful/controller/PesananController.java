@@ -16,7 +16,7 @@ import TukangLaundry.restful.model.Pesanan;
 
 import TukangLaundry.restful.dto.pesanan.CreatePesananRequest;
 import TukangLaundry.restful.dto.pesanan.CreatePesananResponse;
-import TukangLaundry.restful.dto.pesanan.ViewPesananAllResponse;
+import TukangLaundry.restful.dto.pesanan.ViewPesananResponseAll;
 
 import TukangLaundry.restful.service.PesananService;
 

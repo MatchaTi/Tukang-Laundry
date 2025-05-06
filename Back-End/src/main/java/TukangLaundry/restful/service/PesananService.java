@@ -2,6 +2,7 @@ package TukangLaundry.restful.service;
 
 // Keep the unused imports to avoid confusion
 import java.util.List;
+import java.util.Optional;
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,8 @@ import TukangLaundry.restful.model.Pesanan;
 import TukangLaundry.restful.repository.PesananRepository;
 import TukangLaundry.restful.dto.pesanan.CreatePesananResponse;
 import TukangLaundry.restful.dto.pesanan.CreatePesananRequest;
-import TukangLaundry.restful.dto.pesanan.ViewPesananAllResponse;
+import TukangLaundry.restful.dto.pesanan.ViewPesananResponseAll;
+import TukangLaundry.restful.dto.pesanan.ViewPesananResponseSingle;
 
 
 
@@ -54,10 +56,10 @@ public class PesananService {
     }
 
     // View All Pesanan
-    public List<ViewPesananAllResponse> getAllPesanan() {
+    public List<ViewPesananResponseAll> getAllPesanan() {
         List<Pesanan> pesananList = pesananRepo.findAll();
         return pesananList.stream().map(pesanan -> {
-            ViewPesananAllResponse response = new ViewPesananAllResponse();
+            ViewPesananResponseAll response = new ViewPesananResponseAll();
             response.setId(pesanan.getId());
 
             String namaKasir = (kasirService.getKasirById(pesanan.getKasirId())).getName();
@@ -70,13 +72,39 @@ public class PesananService {
             response.setStatus(pesanan.getStatus().toString());
             response.setNamaPelanggan(pesanan.getNamaPelanggan());
             response.setTanggalPesan(pesanan.getTanggalPesan().toString());
-            // Optional
-
+            if (pesanan.getTanggalSelesai() != null) {
+                response.setTanggalSelesai(pesanan.getTanggalSelesai().toString());
+            }
             return response;
         }).toList();
     }
 
     // View Single Pesanan
+    public ViewPesananResponseSingle getPesananById(Integer Id){
+        Optional<Pesanan> pesanan = pesananRepo.findById(Id);
+        if (pesanan.isPresent()) {
+            Pesanan pesananData = pesanan.get();
+            ViewPesananResponseSingle response = new ViewPesananResponseSingle();
+            response.setId(pesananData.getId());
+
+            String namaKasir = (kasirService.getKasirById(pesananData.getKasirId())).getName();
+            response.setNamaKasir(namaKasir);
+            
+            String namaPaket = (paketService.getPaketById(pesananData.getPaketId())).getNama();
+            response.setNamaPaket(namaPaket);
+
+            response.setBeratKg(pesananData.getBeratKg());
+            response.setStatus(pesananData.getStatus().toString());
+            response.setCatatan(pesananData.getCatatan());
+            response.setNamaPelanggan(pesananData.getNamaPelanggan());
+            response.setTanggalPesan(pesananData.getTanggalPesan().toString());
+            
+            return response;
+        } else {
+            throw new RuntimeException("Pesanan tidak ditemukan dengan ID: " + Id);
+        }
+
+    }
 
     // Update Pesanan
 

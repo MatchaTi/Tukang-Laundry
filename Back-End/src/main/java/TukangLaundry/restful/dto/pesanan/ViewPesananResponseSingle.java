@@ -1,30 +1,31 @@
 package TukangLaundry.restful.dto.pesanan;
 
-public class ViewPesananAllResponse {
+public class ViewPesananResponseSingle{
     private Integer id;
-    private String namaPelanggan;
     private String namaKasir;
+    private String namaPelanggan;
     private String namaPaket;
     private Integer beratKg;
     private String status;
+    private String catatan;
     private String tanggalPesan;
     private String tanggalSelesai;
 
-    public ViewPesananAllResponse() {
+
+    public ViewPesananResponseSingle() {
     }
 
-    public ViewPesananAllResponse(Integer id, String namaPelanggan, String namaKasir, String namaPaket, Integer beratKg, String status, String tanggalPesan, String tanggalSelesai) {
+    public ViewPesananResponseSingle(Integer id, String namaKasir, String namaPelanggan, String namaPaket, Integer beratKg, String status, String catatan, String tanggalPesan, String tanggalSelesai) {
         this.id = id;
-        this.namaPelanggan = namaPelanggan;
         this.namaKasir = namaKasir;
+        this.namaPelanggan = namaPelanggan;
         this.namaPaket = namaPaket;
         this.beratKg = beratKg;
         this.status = status;
+        this.catatan = catatan;
         this.tanggalPesan = tanggalPesan;
         this.tanggalSelesai = tanggalSelesai;
     }
-
-    // Getters and Setters
 
     public Integer getId() {
         return id;
@@ -33,18 +34,18 @@ public class ViewPesananAllResponse {
         this.id = id;
     }
 
-    public String getNamaPelanggan() {
-        return namaPelanggan;
-    }
-    public void setNamaPelanggan(String namaPelanggan) {
-        this.namaPelanggan = namaPelanggan;
-    }
-
     public String getNamaKasir() {
         return namaKasir;
     }
     public void setNamaKasir(String namaKasir) {
         this.namaKasir = namaKasir;
+    }
+
+    public String getNamaPelanggan() {
+        return namaPelanggan;
+    }
+    public void setNamaPelanggan(String namaPelanggan) {
+        this.namaPelanggan = namaPelanggan;
     }
 
     public String getNamaPaket() {
@@ -66,6 +67,13 @@ public class ViewPesananAllResponse {
     }
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getCatatan() {
+        return catatan;
+    }
+    public void setCatatan(String catatan) {
+        this.catatan = catatan;
     }
 
     public String getTanggalPesan() {
