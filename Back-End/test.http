@@ -34,8 +34,8 @@ PUT http://localhost:8080/api/v1/kasir/6
 Content-Type: application/json
 
 {
-    "name": "Kasir 2",
-    "email": "kasir1_updated@admin.com",
+    "name": "Kasir 2 Updated",
+    "email": "kasir2_updated@admin.com",
     "password": "kasir123_updated"
 }
 
