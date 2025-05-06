@@ -39,8 +39,7 @@ public class KasirController {
 
             return ResponseEntity.ok(new CreateKasirResponse(true, "Kasir Berhasil Ditambahkan"));
         } catch (Exception e) {
-
-            return ResponseEntity.status(500).body(new CreateKasirResponse(false, "Kasir Gagal Ditambahkan"));
+            return ResponseEntity.status(500).body(new CreateKasirResponse(false, e.getMessage()));
         }
     }
 

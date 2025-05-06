@@ -14,7 +14,7 @@ Content-Type: application/json
 
 {
     "name": "Ucup Bin Calucup",
-    "email": "Walawew@gmail.com",
+    "email": "admin@admin.com",
     "password": "kasir123"
 }
 
@@ -30,12 +30,12 @@ GET http://localhost:8080/api/v1/kasir/9
 
 ### Put kasir by id
 
-PUT http://localhost:8080/api/v1/kasir/1
+PUT http://localhost:8080/api/v1/kasir/5
 Content-Type: application/json
 
 {
-    "name": "Kasir 2",
-    "email": "kasir1_updated@admin.com",
+    "name": "Kasir 2 Updated",
+    "email": "kasir2_updated@admin.com",
     "password": "kasir123_updated"
 }
 
