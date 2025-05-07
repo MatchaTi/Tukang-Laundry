@@ -9,9 +9,12 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+
 
 @Entity
 @Table(name = "pesanan")
@@ -22,11 +25,13 @@ public class Pesanan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
-    private Integer kasirId;
+    @ManyToOne
+    @JoinColumn(name = "kasir_id", nullable = false)
+    private Kasir kasir;
 
-    @Column(nullable = false)
-    private Integer paketId;
+    @ManyToOne
+    @JoinColumn(name = "paket_id", nullable = false)
+    private Paket paket;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -60,18 +65,18 @@ public class Pesanan {
         this.id = id;
     }
 
-    public Integer getKasirId() {
-        return kasirId;
+    public Kasir getKasir() {
+        return kasir;
     }
-    public void setKasirId(Integer kasirId) {
-        this.kasirId = kasirId;
+    public void setKasir(Kasir kasir) {
+        this.kasir = kasir;
     }
 
-    public Integer getPaketId() {
-        return paketId;
+    public Paket getPaket() {
+        return paket;
     }
-    public void setPaketId(Integer paketId) {
-        this.paketId = paketId;
+    public void setPaket(Paket paket) {
+        this.paket = paket;
     }
 
     public Status getStatus() {

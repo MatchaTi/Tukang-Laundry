@@ -12,13 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import TukangLaundry.restful.model.Pesanan;
-
 import TukangLaundry.restful.dto.pesanan.CreatePesananRequest;
 import TukangLaundry.restful.dto.pesanan.CreatePesananResponse;
-import TukangLaundry.restful.dto.pesanan.ViewPesananResponseAll;
-
+import TukangLaundry.restful.dto.pesanan.UpdatePesananRequest;
 import TukangLaundry.restful.service.PesananService;
+
 
 
 @RestController
@@ -45,5 +43,43 @@ public class PesananController {
             return ResponseEntity.status(500).body("Gagal mendapatkan data pesanan");
         }
     }
-    
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getPesananById(@PathVariable Integer id) {
+        try {
+            return ResponseEntity.ok(pesananService.getPesananById(id));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Gagal mendapatkan data pesanan dengan ID: " + id);
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updatePesananById (@PathVariable Integer id, @RequestBody UpdatePesananRequest pesananRequest) {
+        try {
+            pesananRequest.setId(id);
+            CreatePesananResponse response = pesananService.updatePesananById(pesananRequest);
+            if (response.isStatus()) {
+                return ResponseEntity.ok(response);
+            } else {
+                return ResponseEntity.status(404).body(response);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Gagal memperbarui data pesanan dengan ID: " + id + " - " + e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletePesananById(@PathVariable Integer id) {
+        try {
+            CreatePesananResponse response = pesananService.deletePesananById(id);
+            if (response.isStatus()) {
+                return ResponseEntity.ok(response);
+            } else {
+                return ResponseEntity.status(404).body(response);
+            }
+
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Gagal menghapus data pesanan dengan ID: " + id + " - " + e.getMessage());
+        }
+    }
 }

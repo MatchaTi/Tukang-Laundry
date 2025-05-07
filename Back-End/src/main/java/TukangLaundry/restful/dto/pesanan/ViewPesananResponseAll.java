@@ -2,8 +2,8 @@ package TukangLaundry.restful.dto.pesanan;
 
 public class ViewPesananResponseAll {
     private Integer id;
-    private String namaPelanggan;
     private String namaKasir;
+    private String namaPelanggan;
     private String namaPaket;
     private Integer beratKg;
     private String status;

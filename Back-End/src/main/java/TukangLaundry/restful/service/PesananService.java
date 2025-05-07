@@ -3,18 +3,21 @@ package TukangLaundry.restful.service;
 // Keep the unused imports to avoid confusion
 import java.util.List;
 import java.util.Optional;
-import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import TukangLaundry.restful.model.Pesanan;
-import TukangLaundry.restful.repository.PesananRepository;
-import TukangLaundry.restful.dto.pesanan.CreatePesananResponse;
 import TukangLaundry.restful.dto.pesanan.CreatePesananRequest;
+import TukangLaundry.restful.dto.pesanan.CreatePesananResponse;
+import TukangLaundry.restful.dto.pesanan.UpdatePesananRequest;
 import TukangLaundry.restful.dto.pesanan.ViewPesananResponseAll;
 import TukangLaundry.restful.dto.pesanan.ViewPesananResponseSingle;
-
+import TukangLaundry.restful.model.Kasir;
+import TukangLaundry.restful.model.Paket;
+import TukangLaundry.restful.model.Pesanan;
+import TukangLaundry.restful.repository.KasirRepository;
+import TukangLaundry.restful.repository.PaketRepository;
+import TukangLaundry.restful.repository.PesananRepository;
 
 
 @Service
@@ -24,29 +27,35 @@ public class PesananService {
     private PesananRepository pesananRepo;
 
     @Autowired
-    private KasirService kasirService;
+    private KasirRepository kasirRepo;
 
     @Autowired
-    private PaketService paketService;
+    private PaketRepository paketRepo;
+
 
     // Create Pesanan
     public CreatePesananResponse addPesanan(CreatePesananRequest pesananRequest) {
         try {
             Pesanan pesanan = new Pesanan();
-            // Cek apakah kasir dan paket ada
-            if (kasirService.getKasirById(pesananRequest.getKasirId()) == null) {
+
+            Optional<Kasir> kasirOpt = kasirRepo.findById(pesananRequest.getKasirId());
+            if (kasirOpt.isEmpty()) {
                 return new CreatePesananResponse(false, "Kasir tidak ditemukan");
             }
-            pesanan.setKasirId(pesananRequest.getKasirId());
+            Kasir kasir = kasirOpt.get();
+            pesanan.setKasir(kasir);
 
-            if (paketService.getPaketById(pesananRequest.getPaketId()) == null) {
+            Optional<Paket> paketOpt = paketRepo.findById(pesananRequest.getPaketId());
+            if (paketOpt.isEmpty()) {
                 return new CreatePesananResponse(false, "Paket tidak ditemukan");
             }
-            pesanan.setPaketId(pesananRequest.getPaketId());
-            pesanan.setStatus(Pesanan.Status.DIPROSES);
-            pesanan.setCatatan(pesananRequest.getCatatan());
+            Paket paket = paketOpt.get();
+            pesanan.setPaket(paket);
+
             pesanan.setBeratKg(pesananRequest.getBeratKg());
+            pesanan.setCatatan(pesananRequest.getCatatan());
             pesanan.setNamaPelanggan(pesananRequest.getNamaPelanggan());
+            pesanan.setStatus(Pesanan.Status.DIPROSES);
             pesanan.setTanggalPesan(java.time.LocalDateTime.now());
             pesananRepo.save(pesanan);
             return new CreatePesananResponse(true, "Pesanan berhasil ditambahkan");
@@ -62,10 +71,10 @@ public class PesananService {
             ViewPesananResponseAll response = new ViewPesananResponseAll();
             response.setId(pesanan.getId());
 
-            String namaKasir = (kasirService.getKasirById(pesanan.getKasirId())).getName();
+            String namaKasir = pesanan.getKasir().getName();
             response.setNamaKasir(namaKasir);
             
-            String namaPaket = (paketService.getPaketById(pesanan.getPaketId())).getNama();
+            String namaPaket = pesanan.getPaket().getNama();
             response.setNamaPaket(namaPaket);
 
             response.setBeratKg(pesanan.getBeratKg());
@@ -80,33 +89,77 @@ public class PesananService {
     }
 
     // View Single Pesanan
-    public ViewPesananResponseSingle getPesananById(Integer Id){
-        Optional<Pesanan> pesanan = pesananRepo.findById(Id);
-        if (pesanan.isPresent()) {
-            Pesanan pesananData = pesanan.get();
+    public ViewPesananResponseSingle getPesananById(Integer id){
+        Optional<Pesanan> pesananOpt = pesananRepo.findById(id);
+        if (pesananOpt.isPresent()) {
+            Pesanan pesanan = pesananOpt.get();
             ViewPesananResponseSingle response = new ViewPesananResponseSingle();
-            response.setId(pesananData.getId());
+            response.setId(pesanan.getId());
 
-            String namaKasir = (kasirService.getKasirById(pesananData.getKasirId())).getName();
+            String namaKasir = pesanan.getKasir().getName();
             response.setNamaKasir(namaKasir);
             
-            String namaPaket = (paketService.getPaketById(pesananData.getPaketId())).getNama();
+            String namaPaket = pesanan.getPaket().getNama();
             response.setNamaPaket(namaPaket);
 
-            response.setBeratKg(pesananData.getBeratKg());
-            response.setStatus(pesananData.getStatus().toString());
-            response.setCatatan(pesananData.getCatatan());
-            response.setNamaPelanggan(pesananData.getNamaPelanggan());
-            response.setTanggalPesan(pesananData.getTanggalPesan().toString());
+            response.setBeratKg(pesanan.getBeratKg());
+            response.setStatus(pesanan.getStatus().toString());
+            response.setCatatan(pesanan.getCatatan());
+            response.setNamaPelanggan(pesanan.getNamaPelanggan());
+            response.setTanggalPesan(pesanan.getTanggalPesan().toString());
             
             return response;
         } else {
-            throw new RuntimeException("Pesanan tidak ditemukan dengan ID: " + Id);
+            throw new RuntimeException("Pesanan tidak ditemukan dengan ID: " + id);
         }
 
     }
 
     // Update Pesanan
+    public CreatePesananResponse updatePesananById(UpdatePesananRequest request){
+        Optional<Pesanan> pesananOpt = pesananRepo.findById(request.getId());
+        if (pesananOpt.isPresent()) {
+            Pesanan pesanan = pesananOpt.get();
+
+            Optional<Kasir> kasirOpt = kasirRepo.findById(request.getKasirId());
+            if (kasirOpt.isEmpty()) {
+                return new CreatePesananResponse(false, "Kasir tidak ditemukan");
+            }
+            
+            Optional<Paket> paketOpt = paketRepo.findById(request.getPaketId());
+            if (paketOpt.isEmpty()) {
+                return new CreatePesananResponse(false, "Paket tidak ditemukan");
+            }
+            
+            pesanan.setKasir(kasirOpt.get());
+            pesanan.setPaket(paketOpt.get());
+            pesanan.setNamaPelanggan(request.getNamaPelanggan());
+            pesanan.setBeratKg(request.getBeratKg());
+            pesanan.setCatatan(request.getCatatan());
+
+            if (pesanan.getStatus() == Pesanan.Status.SELESAI && request.getStatus().equals("DIPROSES")) {
+                pesanan.setTanggalSelesai(null);
+            } else if (pesanan.getStatus() == Pesanan.Status.DIPROSES && request.getStatus().equals("SELESAI")) {
+                pesanan.setTanggalSelesai(java.time.LocalDateTime.now());
+            }
+            pesanan.setStatus(Pesanan.Status.valueOf(request.getStatus()));
+            pesananRepo.save(pesanan);
+
+            return new CreatePesananResponse(true, "Pesanan berhasil diupdate");
+        }
+        else {
+            return new CreatePesananResponse(false, "Pesanan gagal diupdate");
+        }
+    }
 
     // Delete Pesanan
+    public CreatePesananResponse deletePesananById (Integer id){
+        Optional<Pesanan> pesananOpt = pesananRepo.findById(id);
+        if (pesananOpt.isPresent()) {
+            pesananRepo.delete(pesananOpt.get());
+            return new CreatePesananResponse(true, "Pesanan berhasil dihapus");
+        } else {
+            return new CreatePesananResponse(false, "Pesanan gagal dihapus");
+        }
+    }
 }

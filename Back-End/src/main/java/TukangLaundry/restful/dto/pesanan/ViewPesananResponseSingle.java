@@ -6,8 +6,8 @@ public class ViewPesananResponseSingle{
     private String namaPelanggan;
     private String namaPaket;
     private Integer beratKg;
-    private String status;
     private String catatan;
+    private String status;
     private String tanggalPesan;
     private String tanggalSelesai;
 
