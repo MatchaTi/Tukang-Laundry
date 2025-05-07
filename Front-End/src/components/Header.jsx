@@ -8,7 +8,7 @@ export default function Header() {
     return (
         <section className='flex w-full items-center justify-between'>
             <div className='space-y-3'>
-                <h2 className='text-lg font-semibold'>Selamat Datang, {userCookie.name}</h2>
+                <h2 className='text-lg font-semibold'>Selamat Datang, {userCookie.nama}</h2>
                 <p>{getCurrentDate()}</p>
             </div>
 
