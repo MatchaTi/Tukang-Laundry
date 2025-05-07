@@ -24,7 +24,6 @@ public class PaketController {
     @Autowired
     private PaketService paketService;
 
-    // Tambah data paket
     @PostMapping
     public ResponseEntity<?> addPaket(@RequestBody CreatePaketRequest paketRequest) {
         try {
