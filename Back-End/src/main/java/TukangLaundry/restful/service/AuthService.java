@@ -13,13 +13,14 @@ import TukangLaundry.restful.repository.AdminRepository;
 import TukangLaundry.restful.repository.KasirRepository;
 
 @Service
-public class AuthService {
+public class AuthService implements AuthServiceInterface {
     @Autowired
     private AdminRepository adminRepo;
 
     @Autowired
     private KasirRepository kasirRepo;
 
+    @Override
     public LoginResponse login(LoginRequest request) {
         Optional<Admin> adminOpt = adminRepo.findByEmail(request.getEmail());
         if (adminOpt.isPresent()) {
@@ -54,4 +55,8 @@ public class AuthService {
         response.setPesan("Email atau Password Salah");
         return response;
     }
+}
+
+interface AuthServiceInterface {
+    LoginResponse login(LoginRequest request);
 }

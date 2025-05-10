@@ -13,12 +13,14 @@ import TukangLaundry.restful.dto.kasir.UpdateKasirRequest;
 import TukangLaundry.restful.model.Kasir;
 import TukangLaundry.restful.repository.KasirRepository;
 
+// Interface KasirService
 @Service
-public class KasirService {
+public class KasirService implements KasirServiceInterface {
 
     @Autowired
     private KasirRepository kasirRepo;
 
+    @Override
     public Kasir addKasir(Kasir kasir) {
         // Cek data tidak kosong
         if (kasir.getName() == null || kasir.getEmail() == null || kasir.getPassword() == null) {
@@ -32,6 +34,7 @@ public class KasirService {
         return kasirRepo.save(kasir);
     }
 
+    @Override
     public List<KasirResponseAll> getAllKasir() {
         List<Kasir> kasirList = kasirRepo.findAllActiveKasir();
         return kasirList.stream().map(kasir -> {
@@ -44,6 +47,7 @@ public class KasirService {
         }).toList();
     }
 
+    @Override
     public KasirResponseSingle getKasirById(Integer id) {
         Optional<Kasir> kasirOpt = kasirRepo.findActiveKasirById(id);
         if (kasirOpt.isPresent()) {
@@ -60,6 +64,7 @@ public class KasirService {
         }
     }
 
+    @Override
     public CreateKasirResponse updateKasirById(UpdateKasirRequest request) {
         Optional<Kasir> kasirOpt = kasirRepo.findActiveKasirById(request.getId());
         if (kasirOpt.isPresent()) {
@@ -74,6 +79,7 @@ public class KasirService {
         }
     }
 
+    @Override
     public CreateKasirResponse deleteKasirById(Integer id) {
         Optional<Kasir> kasirOpt = kasirRepo.findById(id);
         if (kasirOpt.isPresent()) {
@@ -87,4 +93,16 @@ public class KasirService {
         }
     }
 
+}
+
+interface KasirServiceInterface {
+    Kasir addKasir(Kasir kasir);
+
+    List<KasirResponseAll> getAllKasir();
+
+    KasirResponseSingle getKasirById(Integer id);
+
+    CreateKasirResponse updateKasirById(UpdateKasirRequest request);
+
+    CreateKasirResponse deleteKasirById(Integer id);
 }
