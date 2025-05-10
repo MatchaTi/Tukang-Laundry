@@ -13,7 +13,6 @@ import TukangLaundry.restful.dto.kasir.UpdateKasirRequest;
 import TukangLaundry.restful.model.Kasir;
 import TukangLaundry.restful.repository.KasirRepository;
 
-// Interface KasirService
 @Service
 public class KasirService implements KasirServiceInterface {
 

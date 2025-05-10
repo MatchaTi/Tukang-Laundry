@@ -11,4 +11,8 @@ public class Kasir extends User {
         this.role = Role.KASIR;
     }
 
+    @Override
+    public Role getRole() {
+        return role;
+    }
 }

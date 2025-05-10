@@ -62,9 +62,7 @@ public abstract class User {
         this.name = name;
     }
 
-    public Role getRole() {
-        return role;
-    }
+    public abstract Role getRole();
 
     public void setRole(Role role) {
         this.role = role;
