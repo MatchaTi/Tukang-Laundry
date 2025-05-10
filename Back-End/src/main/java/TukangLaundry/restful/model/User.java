@@ -2,15 +2,11 @@ package TukangLaundry.restful.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "users")
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public abstract class User {
@@ -19,7 +15,7 @@ public abstract class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = true)
     protected String email;
 
     @Column(nullable = false)
@@ -31,6 +27,9 @@ public abstract class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     protected Role role;
+
+    @Column(nullable = false)
+    protected Boolean deleted = false;
 
     public enum Role {
         ADMIN,
@@ -63,9 +62,8 @@ public abstract class User {
         this.name = name;
     }
 
-    public Role getRole() {
-        return role;
-    }
+    // abstract method untuk getRole
+    public abstract Role getRole();
 
     public void setRole(Role role) {
         this.role = role;
@@ -77,5 +75,13 @@ public abstract class User {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }

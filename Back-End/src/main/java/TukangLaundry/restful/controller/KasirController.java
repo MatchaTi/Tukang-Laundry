@@ -6,6 +6,7 @@ import TukangLaundry.restful.dto.kasir.CreateKasirRequest;
 import TukangLaundry.restful.dto.kasir.CreateKasirResponse;
 import TukangLaundry.restful.dto.kasir.UpdateKasirRequest;
 import TukangLaundry.restful.model.Kasir;
+import TukangLaundry.restful.model.User;
 import TukangLaundry.restful.service.KasirService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +31,12 @@ public class KasirController {
     public ResponseEntity<?> addKasir(@RequestBody CreateKasirRequest kasirRequest) {
         try {
 
-            Kasir kasir = new Kasir();
+            // Polimorfisme
+            User kasir = new Kasir();
             kasir.setName(kasirRequest.getName());
             kasir.setEmail(kasirRequest.getEmail());
             kasir.setPassword(kasirRequest.getPassword());
-
-            kasirService.addKasir(kasir);
+            kasirService.addKasir((Kasir) kasir);
 
             return ResponseEntity.ok(new CreateKasirResponse(true, "Kasir Berhasil Ditambahkan"));
         } catch (Exception e) {

@@ -33,7 +33,7 @@ public class KasirService {
     }
 
     public List<KasirResponseAll> getAllKasir() {
-        List<Kasir> kasirList = kasirRepo.findAll();
+        List<Kasir> kasirList = kasirRepo.findAllActiveKasir();
         return kasirList.stream().map(kasir -> {
             KasirResponseAll response = new KasirResponseAll();
             response.setId(kasir.getId());
@@ -45,7 +45,7 @@ public class KasirService {
     }
 
     public KasirResponseSingle getKasirById(Integer id) {
-        Optional<Kasir> kasirOpt = kasirRepo.findById(id);
+        Optional<Kasir> kasirOpt = kasirRepo.findActiveKasirById(id);
         if (kasirOpt.isPresent()) {
             Kasir kasir = kasirOpt.get();
             KasirResponseSingle response = new KasirResponseSingle();
@@ -61,7 +61,7 @@ public class KasirService {
     }
 
     public CreateKasirResponse updateKasirById(UpdateKasirRequest request) {
-        Optional<Kasir> kasirOpt = kasirRepo.findById(request.getId());
+        Optional<Kasir> kasirOpt = kasirRepo.findActiveKasirById(request.getId());
         if (kasirOpt.isPresent()) {
             Kasir kasir = kasirOpt.get();
             kasir.setName(request.getName());
@@ -77,10 +77,14 @@ public class KasirService {
     public CreateKasirResponse deleteKasirById(Integer id) {
         Optional<Kasir> kasirOpt = kasirRepo.findById(id);
         if (kasirOpt.isPresent()) {
-            kasirRepo.delete(kasirOpt.get());
+            Kasir kasir = kasirOpt.get();
+            kasir.setDeleted(true);
+            kasir.setEmail(null);
+            kasirRepo.save(kasir);
             return new CreateKasirResponse(true, "Kasir berhasil dihapus");
         } else {
             return new CreateKasirResponse(false, "Kasir tidak ditemukan dengan ID: " + id);
         }
     }
+
 }

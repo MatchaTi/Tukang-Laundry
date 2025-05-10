@@ -3,18 +3,17 @@ POST http://localhost:8080/api/v1/auth/login
 Content-Type: application/json
 
 {
-    "email": "Awewe@gmail.com",
-    "password": "kasir123"
+    "email": "admin@admin.com",
+    "password": "admin123"
 }
 
 ### POST new kasir
-
 POST http://localhost:8080/api/v1/kasir
 Content-Type: application/json
 
 {
     "name": "Ucup Bin Calucup",
-    "email": "waw2@gmail.com",
+    "email": "kasir2@gmail.com",
     "password": "kasir123"
 }
 
@@ -30,18 +29,18 @@ GET http://localhost:8080/api/v1/kasir/6
 
 ### Put kasir by id
 
-PUT http://localhost:8080/api/v1/kasir/6
+PUT http://localhost:8080/api/v1/kasir/4
 Content-Type: application/json
 
 {
-    "name": "Kasir 2 Updated",
-    "email": "kasir2_updated@admin.com",
+    "name": "Kasir 5 Updated",
+    "email": "kasir3_updated@admin.com",
     "password": "kasir123_updated"
 }
 
 ### DELETE kasir by id
 
-DELETE http://localhost:8080/api/v1/kasir/1
+DELETE http://localhost:8080/api/v1/kasir/3
 
 
 
@@ -90,8 +89,8 @@ POST http://localhost:8080/api/v1/pesanan
 Content-Type: application/json
 
 {
-    "kasirId": 6,
-    "paketId": 5,
+    "kasirId": 3,
+    "paketId": 1,
     "beratKg": 2,
     "namaPelanggan": "Injil",
     "String": "Customer VIP"

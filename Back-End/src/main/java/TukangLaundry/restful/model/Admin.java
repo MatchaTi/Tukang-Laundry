@@ -10,4 +10,9 @@ public class Admin extends User { // Menerapkan abstract class dan inheritance
     public Admin() {
         this.role = Role.ADMIN;
     }
+
+    @Override
+    public Role getRole() {
+        return role;
+    }
 }

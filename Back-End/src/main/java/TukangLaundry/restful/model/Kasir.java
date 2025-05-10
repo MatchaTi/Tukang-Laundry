@@ -10,4 +10,9 @@ public class Kasir extends User {
     public Kasir() {
         this.role = Role.KASIR;
     }
+
+    @Override
+    public Role getRole() {
+        return role;
+    }
 }
