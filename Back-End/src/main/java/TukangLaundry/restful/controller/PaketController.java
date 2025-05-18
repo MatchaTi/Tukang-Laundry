@@ -50,6 +50,9 @@ public class PaketController {
             return ResponseEntity.status(500).body("Gagal mendapatkan data paket");
         }
     }
+
+    // Get All Paket status Aktif
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getPaketById(@PathVariable Integer id) {
         try {

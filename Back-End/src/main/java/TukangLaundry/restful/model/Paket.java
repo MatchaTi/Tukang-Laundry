@@ -32,10 +32,14 @@ public class Paket {
     @Column(nullable = false)
     private Status status;
 
+    @Column(nullable = false)
+    private Boolean deleted = false;
+
     public enum Status {
         AKTIF,
         NONAKTIF,
     }
+
 
     public Paket() {
         this.status = Status.AKTIF;
@@ -45,7 +49,6 @@ public class Paket {
     public Integer getId() {
         return id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
@@ -53,7 +56,6 @@ public class Paket {
     public String getNama() {
         return nama;
     }
-
     public void setNama(String nama) {
         this.nama = nama;
     }
@@ -61,7 +63,6 @@ public class Paket {
     public Integer getHarga_per_kg() {
         return harga_per_kg;
     }
-
     public void setHarga_per_kg(Integer harga_per_kg) {
         this.harga_per_kg = harga_per_kg;
     }
@@ -69,7 +70,6 @@ public class Paket {
     public String getCatatan() {
         return catatan;
     }
-
     public void setCatatan(String catatan) {
         this.catatan = catatan;
     }
@@ -77,9 +77,15 @@ public class Paket {
     public Status getStatus() {
         return status;
     }
-
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 
 }

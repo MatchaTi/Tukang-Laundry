@@ -24,7 +24,7 @@ public class PaketService {
     }
 
     public List<ViewPaketResponseAll> getAllPaket() {
-        List<Paket> paketList = paketRepo.findAll();
+        List<Paket> paketList = paketRepo.findAllPaket();
         return paketList.stream().map(paket -> {
             ViewPaketResponseAll response = new ViewPaketResponseAll();
             response.setId(paket.getId());
@@ -35,8 +35,11 @@ public class PaketService {
         }).toList();
     }
 
+    // Mengambil semua paket yang statusnya aktif
+
+
     public ViewPaketResponseSingle getPaketById(Integer id) {
-        Optional<Paket> paketOpt = paketRepo.findById(id);
+        Optional<Paket> paketOpt = paketRepo.findPaketById(id);
         if (paketOpt.isPresent()) {
             Paket paket = paketOpt.get();
             ViewPaketResponseSingle response = new ViewPaketResponseSingle();
@@ -52,7 +55,7 @@ public class PaketService {
     }
 
     public CreatePaketResponse updatePaketById(UpdatePaketRequest request) {
-        Optional<Paket> paketOpt = paketRepo.findById(request.getId());
+        Optional<Paket> paketOpt = paketRepo.findPaketById(request.getId());
         if (paketOpt.isPresent()) {
             Paket paket = paketOpt.get();
             paket.setNama(request.getNama());
@@ -67,9 +70,11 @@ public class PaketService {
     }
 
     public CreatePaketResponse deletePaketbyId(Integer id) {
-        Optional<Paket> paketOpt = paketRepo.findById(id);
+        Optional<Paket> paketOpt = paketRepo.findPaketById(id);
         if (paketOpt.isPresent()) {
-            paketRepo.delete(paketOpt.get());
+            Paket paket = paketOpt.get();
+            paket.setDeleted(true);
+            paketRepo.save(paket);
             return new CreatePaketResponse(true, "Paket berhasil dihapus");
         } else {
             return new CreatePaketResponse(false, "Paket Layanan Gagal Dihapus");
