@@ -40,14 +40,14 @@ public class PesananService {
 
             Optional<Kasir> kasirOpt = kasirRepo.findById(pesananRequest.getKasirId());
             if (kasirOpt.isEmpty()) {
-                return new CreatePesananResponse(false, "Kasir tidak ditemukan");
+                return new CreatePesananResponse(false, "Kasir tidak ditemukan (Id: " + pesananRequest.getKasirId() + ")");
             }
             Kasir kasir = kasirOpt.get();
             pesanan.setKasir(kasir);
 
             Optional<Paket> paketOpt = paketRepo.findById(pesananRequest.getPaketId());
             if (paketOpt.isEmpty()) {
-                return new CreatePesananResponse(false, "Paket tidak ditemukan");
+                return new CreatePesananResponse(false, "Paket tidak ditemukan (Id: " + pesananRequest.getPaketId() + ")");
             }
             Paket paket = paketOpt.get();
             pesanan.setPaket(paket);
@@ -67,6 +67,9 @@ public class PesananService {
     // View All Pesanan
     public List<ViewPesananResponseAll> getAllPesanan() {
         List<Pesanan> pesananList = pesananRepo.findAll();
+        if (pesananList.isEmpty()) {
+            throw new RuntimeException("Tidak ada data pesanan");
+        }
         return pesananList.stream().map(pesanan -> {
             ViewPesananResponseAll response = new ViewPesananResponseAll();
             response.setId(pesanan.getId());
@@ -110,7 +113,7 @@ public class PesananService {
             
             return response;
         } else {
-            throw new RuntimeException("Pesanan tidak ditemukan dengan ID: " + id);
+            throw new RuntimeException("Pesanan tidak ditemukan (Id: " + id + ")");
         }
 
     }
@@ -123,12 +126,12 @@ public class PesananService {
 
             Optional<Kasir> kasirOpt = kasirRepo.findById(request.getKasirId());
             if (kasirOpt.isEmpty()) {
-                return new CreatePesananResponse(false, "Kasir tidak ditemukan");
+                return new CreatePesananResponse(false, "Kasir tidak ditemukan (Id: " + request.getKasirId() + ")");
             }
             
             Optional<Paket> paketOpt = paketRepo.findById(request.getPaketId());
             if (paketOpt.isEmpty()) {
-                return new CreatePesananResponse(false, "Paket tidak ditemukan");
+                return new CreatePesananResponse(false, "Paket tidak ditemukan (Id: " + request.getPaketId() + ")");
             }
             
             pesanan.setKasir(kasirOpt.get());
@@ -148,7 +151,7 @@ public class PesananService {
             return new CreatePesananResponse(true, "Pesanan berhasil diupdate");
         }
         else {
-            return new CreatePesananResponse(false, "Pesanan gagal diupdate");
+            return new CreatePesananResponse(false, "Pesanan gagal diupdate (Id: " + request.getId() + ")");
         }
     }
 
@@ -157,9 +160,9 @@ public class PesananService {
         Optional<Pesanan> pesananOpt = pesananRepo.findById(id);
         if (pesananOpt.isPresent()) {
             pesananRepo.delete(pesananOpt.get());
-            return new CreatePesananResponse(true, "Pesanan berhasil dihapus");
+            return new CreatePesananResponse(true, "Pesanan berhasil dihapus (Id: " + id + ")");
         } else {
-            return new CreatePesananResponse(false, "Pesanan gagal dihapus");
+            return new CreatePesananResponse(false, "Pesanan gagal dihapus (Id: " + id + ")");
         }
     }
 }
