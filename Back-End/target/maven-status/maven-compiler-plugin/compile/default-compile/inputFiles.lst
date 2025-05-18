@@ -1,10 +1,13 @@
 D:\Euangelion\Unmul\Semester 4\Object Oriented Programming\Proyek AKhir\Github\Tukang-Laundry\Back-End\src\main\java\TukangLaundry\restful\config\WebConfig.java
 D:\Euangelion\Unmul\Semester 4\Object Oriented Programming\Proyek AKhir\Github\Tukang-Laundry\Back-End\src\main\java\TukangLaundry\restful\controller\AuthController.java
+D:\Euangelion\Unmul\Semester 4\Object Oriented Programming\Proyek AKhir\Github\Tukang-Laundry\Back-End\src\main\java\TukangLaundry\restful\controller\DashboardController.java
 D:\Euangelion\Unmul\Semester 4\Object Oriented Programming\Proyek AKhir\Github\Tukang-Laundry\Back-End\src\main\java\TukangLaundry\restful\controller\KasirController.java
 D:\Euangelion\Unmul\Semester 4\Object Oriented Programming\Proyek AKhir\Github\Tukang-Laundry\Back-End\src\main\java\TukangLaundry\restful\controller\PaketController.java
 D:\Euangelion\Unmul\Semester 4\Object Oriented Programming\Proyek AKhir\Github\Tukang-Laundry\Back-End\src\main\java\TukangLaundry\restful\controller\PesananController.java
 D:\Euangelion\Unmul\Semester 4\Object Oriented Programming\Proyek AKhir\Github\Tukang-Laundry\Back-End\src\main\java\TukangLaundry\restful\dto\auth\LoginRequest.java
 D:\Euangelion\Unmul\Semester 4\Object Oriented Programming\Proyek AKhir\Github\Tukang-Laundry\Back-End\src\main\java\TukangLaundry\restful\dto\auth\LoginResponse.java
+D:\Euangelion\Unmul\Semester 4\Object Oriented Programming\Proyek AKhir\Github\Tukang-Laundry\Back-End\src\main\java\TukangLaundry\restful\dto\dashboard\AdminDashboardResponse.java
+D:\Euangelion\Unmul\Semester 4\Object Oriented Programming\Proyek AKhir\Github\Tukang-Laundry\Back-End\src\main\java\TukangLaundry\restful\dto\dashboard\KasirDashboardResponse.java
 D:\Euangelion\Unmul\Semester 4\Object Oriented Programming\Proyek AKhir\Github\Tukang-Laundry\Back-End\src\main\java\TukangLaundry\restful\dto\kasir\CreateKasirRequest.java
 D:\Euangelion\Unmul\Semester 4\Object Oriented Programming\Proyek AKhir\Github\Tukang-Laundry\Back-End\src\main\java\TukangLaundry\restful\dto\kasir\CreateKasirResponse.java
 D:\Euangelion\Unmul\Semester 4\Object Oriented Programming\Proyek AKhir\Github\Tukang-Laundry\Back-End\src\main\java\TukangLaundry\restful\dto\kasir\KasirResponseAll.java
@@ -30,6 +33,7 @@ D:\Euangelion\Unmul\Semester 4\Object Oriented Programming\Proyek AKhir\Github\T
 D:\Euangelion\Unmul\Semester 4\Object Oriented Programming\Proyek AKhir\Github\Tukang-Laundry\Back-End\src\main\java\TukangLaundry\restful\repository\PaketRepository.java
 D:\Euangelion\Unmul\Semester 4\Object Oriented Programming\Proyek AKhir\Github\Tukang-Laundry\Back-End\src\main\java\TukangLaundry\restful\repository\PesananRepository.java
 D:\Euangelion\Unmul\Semester 4\Object Oriented Programming\Proyek AKhir\Github\Tukang-Laundry\Back-End\src\main\java\TukangLaundry\restful\service\AuthService.java
+D:\Euangelion\Unmul\Semester 4\Object Oriented Programming\Proyek AKhir\Github\Tukang-Laundry\Back-End\src\main\java\TukangLaundry\restful\service\DashboardService.java
 D:\Euangelion\Unmul\Semester 4\Object Oriented Programming\Proyek AKhir\Github\Tukang-Laundry\Back-End\src\main\java\TukangLaundry\restful\service\KasirService.java
 D:\Euangelion\Unmul\Semester 4\Object Oriented Programming\Proyek AKhir\Github\Tukang-Laundry\Back-End\src\main\java\TukangLaundry\restful\service\PaketService.java
 D:\Euangelion\Unmul\Semester 4\Object Oriented Programming\Proyek AKhir\Github\Tukang-Laundry\Back-End\src\main\java\TukangLaundry\restful\service\PesananService.java

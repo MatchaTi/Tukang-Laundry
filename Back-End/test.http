@@ -116,3 +116,15 @@ Content-Type: application/json
     "status": "DIPROSES"
 }
 
+### DELETE pesanan by id
+DELETE http://localhost:8080/api/v1/pesanan/2
+
+
+
+### Dashboard
+
+### GET dashboard admin
+GET http://localhost:8080/api/v1/dashboard/admin
+
+### GET dashboard kasir
+GET http://localhost:8080/api/v1/dashboard/kasir

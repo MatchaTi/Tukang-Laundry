@@ -27,4 +27,8 @@ public interface PaketRepository extends JpaRepository<Paket, Integer> {
     @Query("SELECT p FROM Paket p WHERE p.id = :id AND p.deleted = false")
     Optional<Paket> findPaketById(@Param("id") Integer id);
 
+    // COutn total paket aktif
+    @Query("SELECT COUNT(p) FROM Paket p WHERE p.status = 'AKTIF' AND p.deleted = false")
+    Integer countActivePaket();
+
 }
