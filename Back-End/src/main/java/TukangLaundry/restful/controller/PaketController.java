@@ -51,14 +51,21 @@ public class PaketController {
         }
     }
 
-    // Get All Paket status Aktif
+    @GetMapping("/aktif")
+    public ResponseEntity<?> getAllPaketActive() {
+        try {
+            return ResponseEntity.ok(paketService.getAllPaketActive());
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Gagal mendapatkan data paket aktif");
+        }
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getPaketById(@PathVariable Integer id) {
         try {
             return ResponseEntity.ok(paketService.getPaketById(id));
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("Gagal mendapatkan data paket dengan ID: " + id);
+            return ResponseEntity.status(500).body("Gagal mendapatkan data paket (Id: " + id + ")");
         }
     }
 

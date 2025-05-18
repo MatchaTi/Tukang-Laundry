@@ -19,12 +19,17 @@ public class PaketService {
     @Autowired
     private PaketRepository paketRepo;
 
+    
     public Paket addPaket(Paket paket) {
         return paketRepo.save(paket);
     }
 
+    
     public List<ViewPaketResponseAll> getAllPaket() {
         List<Paket> paketList = paketRepo.findAllPaket();
+        if (paketList.isEmpty()) {
+            throw new RuntimeException("Tidak ada paket layanan yang tersedia");
+        }
         return paketList.stream().map(paket -> {
             ViewPaketResponseAll response = new ViewPaketResponseAll();
             response.setId(paket.getId());
@@ -35,8 +40,22 @@ public class PaketService {
         }).toList();
     }
 
-    // Mengambil semua paket yang statusnya aktif
+    
+    public List<ViewPaketResponseAll> getAllPaketActive() {
+        List<Paket> paketList = paketRepo.findAllPaketActive();
+        if (paketList.isEmpty()) {
 
+            throw new RuntimeException("Tidak ada paket layanan yang aktif ");
+        }
+        return paketList.stream().map(paket -> {
+            ViewPaketResponseAll response = new ViewPaketResponseAll();
+            response.setId(paket.getId());
+            response.setNama(paket.getNama());
+            response.setHarga_per_kg(paket.getHarga_per_kg());
+            response.setStatus(paket.getStatus().toString());
+            return response;
+        }).toList();
+    }
 
     public ViewPaketResponseSingle getPaketById(Integer id) {
         Optional<Paket> paketOpt = paketRepo.findPaketById(id);
@@ -50,9 +69,10 @@ public class PaketService {
             response.setStatus(paket.getStatus().toString());
             return response;
         } else {
-            throw new RuntimeException("Paket Layanan tidak ditemukan dengan ID: " + id);
+            throw new RuntimeException("Paket Layanan tidak ditemukan (Id: " + id + ")");
         }
     }
+
 
     public CreatePaketResponse updatePaketById(UpdatePaketRequest request) {
         Optional<Paket> paketOpt = paketRepo.findPaketById(request.getId());
@@ -65,9 +85,10 @@ public class PaketService {
             paketRepo.save(paket);
             return new CreatePaketResponse(true, "Paket Layanan Berhasil Diupdate");
         } else {
-            return new CreatePaketResponse(false, "Paket Layanan Gagal Diupdate");
+            return new CreatePaketResponse(false, "Paket Layanan tidak ditemukan (Id:" + request.getId() + ")");
         }
     }
+
 
     public CreatePaketResponse deletePaketbyId(Integer id) {
         Optional<Paket> paketOpt = paketRepo.findPaketById(id);
@@ -75,9 +96,9 @@ public class PaketService {
             Paket paket = paketOpt.get();
             paket.setDeleted(true);
             paketRepo.save(paket);
-            return new CreatePaketResponse(true, "Paket berhasil dihapus");
+            return new CreatePaketResponse(true, "Paket Layanan berhasil dihapus (Id: " + id + ")");
         } else {
-            return new CreatePaketResponse(false, "Paket Layanan Gagal Dihapus");
+            return new CreatePaketResponse(false, "Paket Layanan Gagal Dihapus (Id: " + id + ")");
         }
     }
 

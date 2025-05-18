@@ -21,7 +21,7 @@ public interface PaketRepository extends JpaRepository<Paket, Integer> {
 
     // Paket status aktif
     @Query("SELECT p FROM Paket p WHERE p.status = 'AKTIF' AND p.deleted = false")
-    List<Paket> findAllPaketAktif();
+    List<Paket> findAllPaketActive();
 
     // Find Paket deleted = false by id
     @Query("SELECT p FROM Paket p WHERE p.id = :id AND p.deleted = false")
