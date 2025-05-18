@@ -47,38 +47,37 @@ DELETE http://localhost:8080/api/v1/kasir/3
 ### PAKET
 
 ### POST new paket
-
 POST http://localhost:8080/api/v1/paket
 Content-Type: application/json
 
 {
-    "nama": "Kecepatan7",
+    "nama": "Test New Paket",
     "harga_per_kg": 30000,
-    "catatan": null
+    "catatan": "Akan Dihapus"
 }
 
 ### GET all paket
 GET http://localhost:8080/api/v1/paket
 
 ### GET all paket, status aktif
-GET http://localhost:8080/api/v1/paket/aktif
+GET http://localhost:8080/api/v1/paket/active
 
 ### GET paket by id
-GET http://localhost:8080/api/v1/paket/11
+GET http://localhost:8080/api/v1/paket/12
 
 ### PUT paket by id
-PUT http://localhost:8080/api/v1/paket/3
+PUT http://localhost:8080/api/v1/paket/12
 Content-Type: application/json
 
 {
-    "nama": "Petir Nonaktif",
+    "nama": "Test 2 New Paket",
     "harga_per_kg": 30000,
-    "catatan": "1 Jam, Kering, Setrika",
+    "catatan": "Akan Dihapus",
     "status": "NONAKTIF"
 }
 
 ### DELETE paket by id
-DELETE http://localhost:8080/api/v1/paket/20
+DELETE http://localhost:8080/api/v1/paket/12
 
 
 

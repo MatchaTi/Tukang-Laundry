@@ -14,17 +14,18 @@ import TukangLaundry.restful.model.Paket;
 import TukangLaundry.restful.repository.PaketRepository;
 
 @Service
-public class PaketService {
+public class PaketService implements PaketServiceInterface {
 
     @Autowired
     private PaketRepository paketRepo;
 
-    
+    @Override
     public Paket addPaket(Paket paket) {
         return paketRepo.save(paket);
     }
-
     
+    
+    @Override
     public List<ViewPaketResponseAll> getAllPaket() {
         List<Paket> paketList = paketRepo.findAllPaket();
         if (paketList.isEmpty()) {
@@ -41,10 +42,11 @@ public class PaketService {
     }
 
     
+    @Override
     public List<ViewPaketResponseAll> getAllPaketActive() {
         List<Paket> paketList = paketRepo.findAllPaketActive();
         if (paketList.isEmpty()) {
-
+            
             throw new RuntimeException("Tidak ada paket layanan yang aktif ");
         }
         return paketList.stream().map(paket -> {
@@ -56,7 +58,8 @@ public class PaketService {
             return response;
         }).toList();
     }
-
+    
+    @Override
     public ViewPaketResponseSingle getPaketById(Integer id) {
         Optional<Paket> paketOpt = paketRepo.findPaketById(id);
         if (paketOpt.isPresent()) {
@@ -72,8 +75,9 @@ public class PaketService {
             throw new RuntimeException("Paket Layanan tidak ditemukan (Id: " + id + ")");
         }
     }
-
-
+    
+    
+    @Override
     public CreatePaketResponse updatePaketById(UpdatePaketRequest request) {
         Optional<Paket> paketOpt = paketRepo.findPaketById(request.getId());
         if (paketOpt.isPresent()) {
@@ -88,8 +92,9 @@ public class PaketService {
             return new CreatePaketResponse(false, "Paket Layanan tidak ditemukan (Id:" + request.getId() + ")");
         }
     }
-
-
+    
+    
+    @Override
     public CreatePaketResponse deletePaketbyId(Integer id) {
         Optional<Paket> paketOpt = paketRepo.findPaketById(id);
         if (paketOpt.isPresent()) {
@@ -101,5 +106,14 @@ public class PaketService {
             return new CreatePaketResponse(false, "Paket Layanan Gagal Dihapus (Id: " + id + ")");
         }
     }
+    
+}
 
+interface PaketServiceInterface {
+    Paket addPaket(Paket paket);
+    List<ViewPaketResponseAll> getAllPaket();
+    List<ViewPaketResponseAll> getAllPaketActive();
+    ViewPaketResponseSingle getPaketById(Integer id);
+    CreatePaketResponse updatePaketById(UpdatePaketRequest request);
+    CreatePaketResponse deletePaketbyId(Integer id);
 }
