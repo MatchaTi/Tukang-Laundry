@@ -51,7 +51,7 @@ public class PaketController {
         }
     }
 
-    @GetMapping("/aktif")
+    @GetMapping("/active")
     public ResponseEntity<?> getAllPaketActive() {
         try {
             return ResponseEntity.ok(paketService.getAllPaketActive());
