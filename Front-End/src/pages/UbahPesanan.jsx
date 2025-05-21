@@ -24,7 +24,7 @@ export default function UbahPesanan() {
         const fetchData = async () => {
             try {
                 const responsePesanan = await axios.get(`http://localhost:8080/api/v1/pesanan/${id}`);
-                const responsePaket = await axios.get('http://localhost:8080/api/v1/paket');
+                const responsePaket = await axios.get('http://localhost:8080/api/v1/paket/active');
                 console.log(responsePesanan.data);
                 setData(responsePesanan.data);
                 setPaket(responsePaket.data);

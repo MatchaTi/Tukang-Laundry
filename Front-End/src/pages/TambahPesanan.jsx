@@ -20,7 +20,7 @@ export default function TambahPesanan() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/api/v1/paket');
+                const response = await axios.get('http://localhost:8080/api/v1/paket/active');
                 const data = response.data;
                 setPaket(data);
             } catch (error) {
