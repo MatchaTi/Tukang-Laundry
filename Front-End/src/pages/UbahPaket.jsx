@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react/dist/iconify.js';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import Fieldset from '../components/Fieldset';
 import Header from '../components/Header';
@@ -80,7 +80,7 @@ export default function UbahPaket() {
                     <div className='col-span-2'>
                         <button className='btn btn-primary' type='submit'>
                             <Icon icon='tabler:edit' />
-                            <span>Ubah Pesanan</span>
+                            <span>Ubah Paket</span>
                         </button>
                     </div>
                 </form>
