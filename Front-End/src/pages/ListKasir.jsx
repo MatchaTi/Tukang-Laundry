@@ -9,8 +9,8 @@ import MainLayout from '../components/MainLayout';
 import Modal from '../components/Modal';
 
 export default function ListKasir() {
-    // TODO: implement search functionality
     const [data, setdata] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -24,6 +24,8 @@ export default function ListKasir() {
         };
         fetchData();
     }, []);
+
+    const filteredData = data.filter((item) => item.name.toLowerCase().includes(searchQuery.toLowerCase()));
 
     const deleteCashier = async (id) => {
         try {
@@ -55,7 +57,13 @@ export default function ListKasir() {
                 </div>
                 <div className='flex items-center gap-3'>
                     <span>Cari</span>
-                    <input type='text' className='input input-secondary' placeholder='Cari nama kasir' />
+                    <input
+                        type='text'
+                        className='input input-secondary'
+                        placeholder='Cari nama kasir'
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                    />
                 </div>
 
                 <div className='bg-base-100 overflow-x-auto'>
@@ -70,8 +78,8 @@ export default function ListKasir() {
                             </tr>
                         </thead>
                         <tbody>
-                            {data.length > 0 ? (
-                                data.map((item, i) => (
+                            {filteredData.length > 0 ? (
+                                filteredData.map((item, i) => (
                                     <tr key={i}>
                                         <th>{i + 1}</th>
                                         <td>{item.name}</td>

@@ -11,8 +11,8 @@ import Modal from '../components/Modal';
 import { formatDate } from '../utils/date';
 
 export default function ListPesanan() {
-    // TODO: implement search functionality
     const [data, setdata] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -41,6 +41,8 @@ export default function ListPesanan() {
         }
     };
 
+    const filteredData = data.filter((item) => item.namaPelanggan.toLowerCase().includes(searchQuery.toLowerCase()));
+
     return (
         <MainLayout>
             <Header />
@@ -57,7 +59,13 @@ export default function ListPesanan() {
                 </div>
                 <div className='flex items-center gap-3'>
                     <span>Cari</span>
-                    <input type='text' className='input input-secondary' placeholder='Cari nama pelanggan' />
+                    <input
+                        type='text'
+                        className='input input-secondary'
+                        placeholder='Cari nama pelanggan'
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                    />
                 </div>
 
                 <div className='bg-base-100 overflow-x-auto'>
@@ -76,8 +84,8 @@ export default function ListPesanan() {
                             </tr>
                         </thead>
                         <tbody>
-                            {data.length > 0 ? (
-                                data.map((item, i) => (
+                            {filteredData.length > 0 ? (
+                                filteredData.map((item, i) => (
                                     <tr key={i}>
                                         <th>{i + 1}</th>
                                         <td>{item.namaPelanggan}</td>
@@ -152,7 +160,7 @@ export default function ListPesanan() {
                             ) : (
                                 <tr>
                                     <td colSpan='9' className='text-center'>
-                                        Belum ada data
+                                        {searchQuery ? 'Tidak ada hasil yang cocok' : 'Belum ada data'}
                                     </td>
                                 </tr>
                             )}
