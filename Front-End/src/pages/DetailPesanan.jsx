@@ -1,4 +1,3 @@
-import { Icon } from '@iconify/react/dist/iconify.js';
 import axios from 'axios';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
@@ -85,12 +84,6 @@ export default function DetailPesanan() {
                         disabled
                         value={data.beratKg * data.hargaPaket}
                     />
-                    <div className='col-span-2'>
-                        <button className='btn btn-primary'>
-                            <Icon icon='material-symbols:print-outline-rounded' />
-                            <span>Cetak Detail</span>
-                        </button>
-                    </div>
                 </div>
             </section>
         </MainLayout>
