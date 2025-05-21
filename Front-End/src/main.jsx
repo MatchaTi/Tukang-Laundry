@@ -9,6 +9,7 @@ import ListKasir from './pages/ListKasir.jsx';
 import ListPaket from './pages/ListPaket.jsx';
 import ListPesanan from './pages/ListPesanan.jsx';
 import Login from './pages/Login.jsx';
+import Dashboard from './pages/Dashboard.jsx';
 import Home from './pages/LandingPage.jsx';
 import TambahKasir from './pages/TambahKasir.jsx';
 import TambahPaket from './pages/TambahPaket.jsx';
@@ -24,6 +25,7 @@ createRoot(document.getElementById('root')).render(
                 <Route path='/' element={<App />} />
                 <Route path='/c/:id' element={<App />} />
                 <Route path='/login' element={<Login />} />
+                <Route path='/dashboard' element={<Dashboard />} />
                 <Route path='/home' element={<Home />} />
                 <Route path='/list-pesanan' element={<ListPesanan />} />
                 <Route path='/list-pesanan/tambah-pesanan' element={<TambahPesanan />} />
