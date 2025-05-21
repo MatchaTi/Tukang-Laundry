@@ -30,7 +30,7 @@ const useLogin = () => {
             const { pesan, ...userData } = response.data.data;
             setCookie(userData);
             toast.success(pesan);
-            navigate('/list-pesanan');
+            navigate('/dashboard');
         } catch (error) {
             toast.error('Login gagal, silahkan coba lagi', error);
         }
