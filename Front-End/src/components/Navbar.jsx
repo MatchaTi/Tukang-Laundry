@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react/dist/iconify.js';
 import clsx from 'clsx';
-import React from 'react';
 import { Link, useLocation } from 'react-router';
 import { adminItems, kasirItems } from '../constants/navItems';
 import { getCookie } from '../utils/cookie';
@@ -10,6 +9,7 @@ export default function Navbar() {
     let navItems;
 
     const userCookie = getCookie();
+    if (!userCookie) window.location.href = '/login';
     if (userCookie.role === 'Admin') navItems = adminItems;
     else if (userCookie.role === 'Kasir') navItems = kasirItems;
 
