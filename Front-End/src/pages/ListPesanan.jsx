@@ -1,14 +1,46 @@
 import { Icon } from '@iconify/react/dist/iconify.js';
-import React from 'react';
+import axios from 'axios';
+import clsx from 'clsx';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router';
 import Badge from '../components/Badge';
 import Header from '../components/Header';
 import MainLayout from '../components/MainLayout';
 import Modal from '../components/Modal';
+import { formatDate } from '../utils/date';
 
 export default function ListPesanan() {
     // TODO: implement search functionality
+    const [data, setdata] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('http://localhost:8080/api/v1/pesanan');
+                setdata(response.data);
+                console.log(response.data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+        fetchData();
+    }, []);
+
+    const deleteOrder = async (id) => {
+        try {
+            const response = await axios.delete(`http://localhost:8080/api/v1/pesanan/${id}`);
+            if (!response.data.status) {
+                toast.error(response.data.pesan);
+                return;
+            }
+            toast.success(response.data.pesan);
+            window.location.reload();
+        } catch (error) {
+            toast.error('Gagal menghapus pesanan', error);
+        }
+    };
+
     return (
         <MainLayout>
             <Header />
@@ -44,51 +76,64 @@ export default function ListPesanan() {
                             </tr>
                         </thead>
                         <tbody>
-                            {Array.from({ length: 10 }, (_, i) => (
+                            {data.map((item, i) => (
                                 <tr key={i}>
                                     <th>{i + 1}</th>
-                                    <td>Mahmud</td>
-                                    <td>Raana</td>
-                                    <td>Express</td>
-                                    <td>10kg</td>
+                                    <td>{item.namaPelanggan}</td>
+                                    <td>{item.namaKasir}</td>
+                                    <td>{item.namaPaket}</td>
+                                    <td>{item.beratKg}</td>
                                     <td>
-                                        <Badge state='badge-success'>Selesai</Badge>
+                                        <Badge
+                                            state={clsx(item.status == 'DIPROSES' ? 'badge-warning' : 'badge-success')}
+                                        >
+                                            {item.status}
+                                        </Badge>
                                     </td>
-                                    <td>11 Feb 2025 18:48</td>
-                                    <td>11 Feb 2025 18:48</td>
+                                    <td>{formatDate(new Date(item.tanggalPesan))}</td>
+                                    <td>
+                                        {item.tanggalSelesai ? (
+                                            formatDate(new Date(item.tanggalSelesai))
+                                        ) : (
+                                            <Badge state='badge-warning'>Belum Selesai</Badge>
+                                        )}
+                                    </td>
                                     <td className='flex items-center gap-3'>
                                         <Link
-                                            to={`/list-pesanan/detail-pesanan/${i}`}
+                                            to={`/list-pesanan/detail-pesanan/${item.id}`}
                                             className='btn btn-primary btn-sm'
                                         >
                                             <Icon icon='iconoir:eye' />
                                         </Link>
-                                        <Link to={`/list-pesanan/ubah-pesanan/${i}`} className='btn btn-info btn-sm'>
+                                        <Link
+                                            to={`/list-pesanan/ubah-pesanan/${item.id}`}
+                                            className='btn btn-info btn-sm'
+                                        >
                                             <Icon icon='tabler:edit' />
                                         </Link>
 
                                         <Modal.Trigger
-                                            htmlFor={`my_modal_${i}`}
+                                            htmlFor={`my_modal_${item.id}`}
                                             btnState='btn-error'
                                             className='btn-sm'
                                         >
                                             <Icon icon='tabler:trash' />
                                         </Modal.Trigger>
-                                        <Modal modalId={`my_modal_${i}`}>
+                                        <Modal modalId={`my_modal_${item.id}`}>
                                             <Modal.Header>Hapus Pesanan</Modal.Header>
                                             <Modal.Body>
                                                 <p className='text-sm'>
-                                                    Apakah anda yakin ingin menghapus pesanan {i}?
+                                                    Apakah anda yakin ingin menghapus pesanan {item.namaPelanggan}?
                                                 </p>
                                                 <div className='modal-action flex items-center gap-3'>
-                                                    <label htmlFor={`my_modal_${i}`} className='cursor-pointer'>
+                                                    <label htmlFor={`my_modal_${item.id}`} className='cursor-pointer'>
                                                         Tutup
                                                     </label>
                                                     <label
                                                         role='button'
-                                                        onClick={() => toast.success('Pesanan berhasil dihapus!')}
+                                                        onClick={() => deleteOrder(item.id)}
                                                         className='btn btn-error text-white'
-                                                        htmlFor={`my_modal_${i}`}
+                                                        htmlFor={`my_modal_${item.id}`}
                                                     >
                                                         Hapus
                                                     </label>

@@ -1,5 +1,7 @@
 import { Icon } from '@iconify/react/dist/iconify.js';
-import React from 'react';
+import axios from 'axios';
+import clsx from 'clsx';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import Badge from '../components/Badge';
 import Header from '../components/Header';
@@ -8,8 +10,21 @@ import MainLayout from '../components/MainLayout';
 
 export default function DetailPesanan() {
     let { id } = useParams();
-    console.log(id);
-    // TODO: Fetch data from API
+    const [data, setData] = useState({});
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8080/api/v1/pesanan/${id}`);
+                setData(response.data);
+                console.log(response.data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+        fetchData();
+    }, [id]);
+
     return (
         <MainLayout>
             <Header />
@@ -21,7 +36,9 @@ export default function DetailPesanan() {
                     </div>
                     <div className='flex min-w-fit items-center gap-3'>
                         <div className='min-w-fit'>Status Pesanan: </div>
-                        <Badge state='badge-success'>Selesai</Badge>
+                        <Badge state={clsx(data.status == 'DIPROSES' ? 'badge-warning' : 'badge-success')}>
+                            {data.status}
+                        </Badge>
                     </div>
                 </div>
 
@@ -30,13 +47,44 @@ export default function DetailPesanan() {
                         label='Nama Kasir'
                         icon='material-symbols:person-outline-rounded'
                         placeholder='Nama Kasir'
+                        value={data.namaKasir}
                         disabled
                     />
-                    <Input label='Nama Pelanggan' icon='ic:outline-person-add' placeholder='Nama Pelanggan' disabled />
-                    <Input label='Berat' icon='mdi:weight-kilogram' placeholder='Berat Cucian' disabled />
-                    <Input label='Paket Layanan' icon='mingcute:wash-machine-line' placeholder='Nama Paket' disabled />
-                    <Input label='Catatan' icon='mdi:post-it-note-outline' placeholder='Catatan Pesanan' disabled />
-                    <Input label='Harga' icon='tdesign:money' placeholder='4x3.000 = 12.000' disabled />
+                    <Input
+                        label='Nama Pelanggan'
+                        icon='ic:outline-person-add'
+                        placeholder='Nama Pelanggan'
+                        disabled
+                        value={data.namaPelanggan}
+                    />
+                    <Input
+                        label='Berat'
+                        icon='mdi:weight-kilogram'
+                        placeholder='Berat Cucian'
+                        disabled
+                        value={data.beratKg}
+                    />
+                    <Input
+                        label='Paket Layanan'
+                        icon='mingcute:wash-machine-line'
+                        placeholder='Nama Paket'
+                        disabled
+                        value={data.namaPaket}
+                    />
+                    <Input
+                        label='Catatan'
+                        icon='mdi:post-it-note-outline'
+                        placeholder='Catatan Pesanan'
+                        disabled
+                        value={data.catatan}
+                    />
+                    <Input
+                        label='Harga'
+                        icon='tdesign:money'
+                        placeholder='4x3.000 = 12.000'
+                        disabled
+                        value={data.beratKg * data.hargaPaket}
+                    />
                     <div className='col-span-2'>
                         <button className='btn btn-primary'>
                             <Icon icon='material-symbols:print-outline-rounded' />
