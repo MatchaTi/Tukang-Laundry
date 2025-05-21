@@ -1,11 +1,11 @@
 import { Toaster } from 'react-hot-toast';
 import Input from '../components/Input';
 import useLogin from '../hooks/useLogin';
-import { getCookie } from '../utils/cookie';
+// import { getCookie } from '../utils/cookie';
 
 export default function Login() {
-    const userCookie = getCookie();
-    if (userCookie) window.location.href = '/';
+    // const userCookie = getCookie();
+    // if (userCookie) window.location.href = '/';
 
     const { register, handleSubmit, onSubmit, errors } = useLogin();
 
