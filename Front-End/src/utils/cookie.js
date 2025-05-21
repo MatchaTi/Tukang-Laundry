@@ -1,5 +1,6 @@
 export const getCookie = () => {
     const cookie = document.cookie;
+    if (!cookie) return null;
     const userCookie = JSON.parse(cookie.split('=')[1]);
 
     return userCookie;

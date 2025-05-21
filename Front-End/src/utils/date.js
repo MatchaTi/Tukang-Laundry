@@ -1,4 +1,8 @@
 export function formatDate(date) {
+    if (!(date instanceof Date) || isNaN(date)) {
+        throw new Error('Parameter harus berupa objek Date yang valid.');
+    }
+
     const formattedDate = new Intl.DateTimeFormat('id-ID', {
         weekday: 'long',
         year: 'numeric',
