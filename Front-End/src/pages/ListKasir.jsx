@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react/dist/iconify.js';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router';
 import Badge from '../components/Badge';
@@ -70,50 +70,64 @@ export default function ListKasir() {
                             </tr>
                         </thead>
                         <tbody>
-                            {data.map((item, i) => (
-                                <tr key={i}>
-                                    <th>{i + 1}</th>
-                                    <td>{item.name}</td>
-                                    <td>{item.email}</td>
-                                    <td>
-                                        <Badge state='badge-success'>{item.role}</Badge>
-                                    </td>
-                                    <td className='flex items-center justify-end gap-3'>
-                                        <Link to={`/list-kasir/ubah-kasir/${item.id}`} className='btn btn-info btn-sm'>
-                                            <Icon icon='tabler:edit' />
-                                        </Link>
+                            {data.length > 0 ? (
+                                data.map((item, i) => (
+                                    <tr key={i}>
+                                        <th>{i + 1}</th>
+                                        <td>{item.name}</td>
+                                        <td>{item.email}</td>
+                                        <td>
+                                            <Badge state='badge-success'>{item.role}</Badge>
+                                        </td>
+                                        <td className='flex items-center justify-end gap-3'>
+                                            <Link
+                                                to={`/list-kasir/ubah-kasir/${item.id}`}
+                                                className='btn btn-info btn-sm'
+                                            >
+                                                <Icon icon='tabler:edit' />
+                                            </Link>
 
-                                        <Modal.Trigger
-                                            htmlFor={`my_modal_${item.id}`}
-                                            btnState='btn-error'
-                                            className='btn-sm'
-                                        >
-                                            <Icon icon='tabler:trash' />
-                                        </Modal.Trigger>
-                                        <Modal modalId={`my_modal_${item.id}`}>
-                                            <Modal.Header>Hapus Kasir</Modal.Header>
-                                            <Modal.Body>
-                                                <p className='text-sm'>
-                                                    Apakah anda yakin ingin menghapus kasir {item.name}?
-                                                </p>
-                                                <div className='modal-action flex items-center gap-3'>
-                                                    <label htmlFor={`my_modal_${item.id}`} className='cursor-pointer'>
-                                                        Tutup
-                                                    </label>
-                                                    <label
-                                                        role='button'
-                                                        onClick={() => deleteCashier(item.id)}
-                                                        className='btn btn-error text-white'
-                                                        htmlFor={`my_modal_${item.id}`}
-                                                    >
-                                                        Hapus
-                                                    </label>
-                                                </div>
-                                            </Modal.Body>
-                                        </Modal>
+                                            <Modal.Trigger
+                                                htmlFor={`my_modal_${item.id}`}
+                                                btnState='btn-error'
+                                                className='btn-sm'
+                                            >
+                                                <Icon icon='tabler:trash' />
+                                            </Modal.Trigger>
+                                            <Modal modalId={`my_modal_${item.id}`}>
+                                                <Modal.Header>Hapus Kasir</Modal.Header>
+                                                <Modal.Body>
+                                                    <p className='text-sm'>
+                                                        Apakah anda yakin ingin menghapus kasir {item.name}?
+                                                    </p>
+                                                    <div className='modal-action flex items-center gap-3'>
+                                                        <label
+                                                            htmlFor={`my_modal_${item.id}`}
+                                                            className='cursor-pointer'
+                                                        >
+                                                            Tutup
+                                                        </label>
+                                                        <label
+                                                            role='button'
+                                                            onClick={() => deleteCashier(item.id)}
+                                                            className='btn btn-error text-white'
+                                                            htmlFor={`my_modal_${item.id}`}
+                                                        >
+                                                            Hapus
+                                                        </label>
+                                                    </div>
+                                                </Modal.Body>
+                                            </Modal>
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan='5' className='text-center'>
+                                        Belum ada data
                                     </td>
                                 </tr>
-                            ))}
+                            )}
                         </tbody>
                     </table>
                 </div>

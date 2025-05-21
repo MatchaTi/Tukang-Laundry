@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react/dist/iconify.js';
 import axios from 'axios';
 import clsx from 'clsx';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router';
 import Badge from '../components/Badge';
@@ -71,63 +71,76 @@ export default function ListPaket() {
                             </tr>
                         </thead>
                         <tbody>
-                            {data.map((item, i) => (
-                                <tr key={i}>
-                                    <th>{i + 1}</th>
-                                    <td>{item.nama}</td>
-                                    <td>{item.harga_per_kg}</td>
-                                    <td>
-                                        <Badge
-                                            state={clsx(item.status === 'AKTIF' ? 'badge-success' : 'badge-warning')}
-                                        >
-                                            {item.status}
-                                        </Badge>
-                                    </td>
-                                    <td className='flex items-center justify-end gap-3'>
-                                        <Link
-                                            to={`/paket-layanan/detail-paket/${item.id}`}
-                                            className='btn btn-primary btn-sm'
-                                        >
-                                            <Icon icon='iconoir:eye' />
-                                        </Link>
-                                        <Link
-                                            to={`/paket-layanan/ubah-paket/${item.id}`}
-                                            className='btn btn-info btn-sm'
-                                        >
-                                            <Icon icon='tabler:edit' />
-                                        </Link>
+                            {data.length > 0 ? (
+                                data.map((item, i) => (
+                                    <tr key={i}>
+                                        <th>{i + 1}</th>
+                                        <td>{item.nama}</td>
+                                        <td>{item.harga_per_kg}</td>
+                                        <td>
+                                            <Badge
+                                                state={clsx(
+                                                    item.status === 'AKTIF' ? 'badge-success' : 'badge-warning',
+                                                )}
+                                            >
+                                                {item.status}
+                                            </Badge>
+                                        </td>
+                                        <td className='flex items-center justify-end gap-3'>
+                                            <Link
+                                                to={`/paket-layanan/detail-paket/${item.id}`}
+                                                className='btn btn-primary btn-sm'
+                                            >
+                                                <Icon icon='iconoir:eye' />
+                                            </Link>
+                                            <Link
+                                                to={`/paket-layanan/ubah-paket/${item.id}`}
+                                                className='btn btn-info btn-sm'
+                                            >
+                                                <Icon icon='tabler:edit' />
+                                            </Link>
 
-                                        <Modal.Trigger
-                                            htmlFor={`my_modal_${item.id}`}
-                                            btnState='btn-error'
-                                            className='btn-sm'
-                                        >
-                                            <Icon icon='tabler:trash' />
-                                        </Modal.Trigger>
-                                        <Modal modalId={`my_modal_${item.id}`}>
-                                            <Modal.Header>Hapus Paket Layanan</Modal.Header>
-                                            <Modal.Body>
-                                                <p className='text-sm'>
-                                                    Apakah anda yakin ingin menghapus paket {item.nama}?
-                                                </p>
-                                                <div className='modal-action flex items-center gap-3'>
-                                                    <label htmlFor={`my_modal_${item.id}`} className='cursor-pointer'>
-                                                        Tutup
-                                                    </label>
-                                                    <label
-                                                        role='button'
-                                                        onClick={() => deletePacket(item.id)}
-                                                        className='btn btn-error text-white'
-                                                        htmlFor={`my_modal_${item.id}`}
-                                                    >
-                                                        Hapus
-                                                    </label>
-                                                </div>
-                                            </Modal.Body>
-                                        </Modal>
+                                            <Modal.Trigger
+                                                htmlFor={`my_modal_${item.id}`}
+                                                btnState='btn-error'
+                                                className='btn-sm'
+                                            >
+                                                <Icon icon='tabler:trash' />
+                                            </Modal.Trigger>
+                                            <Modal modalId={`my_modal_${item.id}`}>
+                                                <Modal.Header>Hapus Paket Layanan</Modal.Header>
+                                                <Modal.Body>
+                                                    <p className='text-sm'>
+                                                        Apakah anda yakin ingin menghapus paket {item.nama}?
+                                                    </p>
+                                                    <div className='modal-action flex items-center gap-3'>
+                                                        <label
+                                                            htmlFor={`my_modal_${item.id}`}
+                                                            className='cursor-pointer'
+                                                        >
+                                                            Tutup
+                                                        </label>
+                                                        <label
+                                                            role='button'
+                                                            onClick={() => deletePacket(item.id)}
+                                                            className='btn btn-error text-white'
+                                                            htmlFor={`my_modal_${item.id}`}
+                                                        >
+                                                            Hapus
+                                                        </label>
+                                                    </div>
+                                                </Modal.Body>
+                                            </Modal>
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan='5' className='text-center'>
+                                        Belum ada data
                                     </td>
                                 </tr>
-                            ))}
+                            )}
                         </tbody>
                     </table>
                 </div>

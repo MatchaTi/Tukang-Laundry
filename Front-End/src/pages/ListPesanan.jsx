@@ -76,73 +76,86 @@ export default function ListPesanan() {
                             </tr>
                         </thead>
                         <tbody>
-                            {data.map((item, i) => (
-                                <tr key={i}>
-                                    <th>{i + 1}</th>
-                                    <td>{item.namaPelanggan}</td>
-                                    <td>{item.namaKasir}</td>
-                                    <td>{item.namaPaket}</td>
-                                    <td>{item.beratKg}</td>
-                                    <td>
-                                        <Badge
-                                            state={clsx(item.status == 'DIPROSES' ? 'badge-warning' : 'badge-success')}
-                                        >
-                                            {item.status}
-                                        </Badge>
-                                    </td>
-                                    <td>{formatDate(new Date(item.tanggalPesan))}</td>
-                                    <td>
-                                        {item.tanggalSelesai ? (
-                                            formatDate(new Date(item.tanggalSelesai))
-                                        ) : (
-                                            <Badge state='badge-warning'>Belum Selesai</Badge>
-                                        )}
-                                    </td>
-                                    <td className='flex items-center gap-3'>
-                                        <Link
-                                            to={`/list-pesanan/detail-pesanan/${item.id}`}
-                                            className='btn btn-primary btn-sm'
-                                        >
-                                            <Icon icon='iconoir:eye' />
-                                        </Link>
-                                        <Link
-                                            to={`/list-pesanan/ubah-pesanan/${item.id}`}
-                                            className='btn btn-info btn-sm'
-                                        >
-                                            <Icon icon='tabler:edit' />
-                                        </Link>
+                            {data.length > 0 ? (
+                                data.map((item, i) => (
+                                    <tr key={i}>
+                                        <th>{i + 1}</th>
+                                        <td>{item.namaPelanggan}</td>
+                                        <td>{item.namaKasir}</td>
+                                        <td>{item.namaPaket}</td>
+                                        <td>{item.beratKg}</td>
+                                        <td>
+                                            <Badge
+                                                state={clsx(
+                                                    item.status == 'DIPROSES' ? 'badge-warning' : 'badge-success',
+                                                )}
+                                            >
+                                                {item.status}
+                                            </Badge>
+                                        </td>
+                                        <td>{formatDate(new Date(item.tanggalPesan))}</td>
+                                        <td>
+                                            {item.tanggalSelesai ? (
+                                                formatDate(new Date(item.tanggalSelesai))
+                                            ) : (
+                                                <Badge state='badge-warning'>Belum Selesai</Badge>
+                                            )}
+                                        </td>
+                                        <td className='flex items-center gap-3'>
+                                            <Link
+                                                to={`/list-pesanan/detail-pesanan/${item.id}`}
+                                                className='btn btn-primary btn-sm'
+                                            >
+                                                <Icon icon='iconoir:eye' />
+                                            </Link>
+                                            <Link
+                                                to={`/list-pesanan/ubah-pesanan/${item.id}`}
+                                                className='btn btn-info btn-sm'
+                                            >
+                                                <Icon icon='tabler:edit' />
+                                            </Link>
 
-                                        <Modal.Trigger
-                                            htmlFor={`my_modal_${item.id}`}
-                                            btnState='btn-error'
-                                            className='btn-sm'
-                                        >
-                                            <Icon icon='tabler:trash' />
-                                        </Modal.Trigger>
-                                        <Modal modalId={`my_modal_${item.id}`}>
-                                            <Modal.Header>Hapus Pesanan</Modal.Header>
-                                            <Modal.Body>
-                                                <p className='text-sm'>
-                                                    Apakah anda yakin ingin menghapus pesanan {item.namaPelanggan}?
-                                                </p>
-                                                <div className='modal-action flex items-center gap-3'>
-                                                    <label htmlFor={`my_modal_${item.id}`} className='cursor-pointer'>
-                                                        Tutup
-                                                    </label>
-                                                    <label
-                                                        role='button'
-                                                        onClick={() => deleteOrder(item.id)}
-                                                        className='btn btn-error text-white'
-                                                        htmlFor={`my_modal_${item.id}`}
-                                                    >
-                                                        Hapus
-                                                    </label>
-                                                </div>
-                                            </Modal.Body>
-                                        </Modal>
+                                            <Modal.Trigger
+                                                htmlFor={`my_modal_${item.id}`}
+                                                btnState='btn-error'
+                                                className='btn-sm'
+                                            >
+                                                <Icon icon='tabler:trash' />
+                                            </Modal.Trigger>
+                                            <Modal modalId={`my_modal_${item.id}`}>
+                                                <Modal.Header>Hapus Pesanan</Modal.Header>
+                                                <Modal.Body>
+                                                    <p className='text-sm'>
+                                                        Apakah anda yakin ingin menghapus pesanan {item.namaPelanggan}?
+                                                    </p>
+                                                    <div className='modal-action flex items-center gap-3'>
+                                                        <label
+                                                            htmlFor={`my_modal_${item.id}`}
+                                                            className='cursor-pointer'
+                                                        >
+                                                            Tutup
+                                                        </label>
+                                                        <label
+                                                            role='button'
+                                                            onClick={() => deleteOrder(item.id)}
+                                                            className='btn btn-error text-white'
+                                                            htmlFor={`my_modal_${item.id}`}
+                                                        >
+                                                            Hapus
+                                                        </label>
+                                                    </div>
+                                                </Modal.Body>
+                                            </Modal>
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan='9' className='text-center'>
+                                        Belum ada data
                                     </td>
                                 </tr>
-                            ))}
+                            )}
                         </tbody>
                     </table>
                 </div>
