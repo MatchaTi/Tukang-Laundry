@@ -3,7 +3,7 @@ use tukanglaundry;
 
 create table users (
     id int primary key auto_increment,
-    email varchar(255) not null,
+    email varchar(255),
     password varchar(255) not null,
     name varchar(255) not null,
     role enum('admin', 'kasir') not null default 'kasir'
