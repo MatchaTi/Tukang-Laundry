@@ -17,8 +17,6 @@ import TukangLaundry.restful.dto.pesanan.CreatePesananResponse;
 import TukangLaundry.restful.dto.pesanan.UpdatePesananRequest;
 import TukangLaundry.restful.service.PesananService;
 
-
-
 @RestController
 @RequestMapping("api/v1/pesanan")
 public class PesananController {
@@ -53,8 +51,17 @@ public class PesananController {
         }
     }
 
+    @GetMapping("/riwayat")
+    public ResponseEntity<?> getRiwayatPesanan() {
+        try {
+            return ResponseEntity.ok(pesananService.getRiwayatPesanan());
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Gagal mendapatkan data riwayat pesanan");
+        }
+    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<?> updatePesananById (@PathVariable Integer id, @RequestBody UpdatePesananRequest pesananRequest) {
+    public ResponseEntity<?> updatePesananById(@PathVariable Integer id, @RequestBody UpdatePesananRequest pesananRequest) {
         try {
             pesananRequest.setId(id);
             CreatePesananResponse response = pesananService.updatePesananById(pesananRequest);

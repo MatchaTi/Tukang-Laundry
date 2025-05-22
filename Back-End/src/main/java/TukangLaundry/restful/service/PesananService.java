@@ -121,6 +121,33 @@ public class PesananService {
 
     }
 
+    //View riwayat pesanan
+    public List<ViewPesananResponseAll> getRiwayatPesanan() {
+        List<Pesanan> pesananList = pesananRepo.findAllPesananSelesai();
+        if (pesananList.isEmpty()) {
+            throw new RuntimeException("Tidak ada data riwayat pesanan");
+        }
+        return pesananList.stream().map(pesanan -> {
+            ViewPesananResponseAll response = new ViewPesananResponseAll();
+            response.setId(pesanan.getId());
+
+            String namaKasir = pesanan.getKasir().getName();
+            response.setNamaKasir(namaKasir);
+
+            String namaPaket = pesanan.getPaket().getNama();
+            response.setNamaPaket(namaPaket);
+
+            response.setBeratKg(pesanan.getBeratKg());
+            response.setStatus(pesanan.getStatus().toString());
+            response.setNamaPelanggan(pesanan.getNamaPelanggan());
+            response.setTanggalPesan(pesanan.getTanggalPesan().toString());
+            if (pesanan.getTanggalSelesai() != null) {
+                response.setTanggalSelesai(pesanan.getTanggalSelesai().toString());
+            }
+            return response;
+        }).toList();
+    }
+
     // Update Pesanan
     public CreatePesananResponse updatePesananById(UpdatePesananRequest request) {
         Optional<Pesanan> pesananOpt = pesananRepo.findById(request.getId());
