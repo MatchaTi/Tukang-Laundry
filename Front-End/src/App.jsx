@@ -8,6 +8,7 @@ import ListKasir from './pages/ListKasir';
 import ListPaket from './pages/ListPaket';
 import ListPesanan from './pages/ListPesanan';
 import Login from './pages/Login';
+import RiwayatPesanan from './pages/RiwayatPesanan';
 import TambahKasir from './pages/TambahKasir';
 import TambahPaket from './pages/TambahPaket';
 import TambahPesanan from './pages/TambahPesanan';
@@ -21,6 +22,7 @@ function App() {
             <Route path='/' element={<LandingPage />} />
             <Route path='/login' element={<Login />} />
             <Route path='/dashboard' element={<Dashboard />} />
+            <Route path='/riwayat-pesanan' element={<RiwayatPesanan />} />
             <Route path='/list-pesanan' element={<ListPesanan />} />
             <Route path='/list-pesanan/tambah-pesanan' element={<TambahPesanan />} />
             <Route path='/list-pesanan/detail-pesanan/:id' element={<DetailPesanan />} />
